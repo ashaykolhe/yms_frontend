@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
-const { CommonSchema } = require("./common.model");
+import mongoose from 'mongoose';
 
 const DomainSchema = new mongoose.Schema(
 	{
+		channelId: { type: String, required: true },
 		status: [
 			{
 				type: String
@@ -14,6 +14,4 @@ const DomainSchema = new mongoose.Schema(
 	}
 );
 
-const Domain = mongoose.model("Domain", DomainSchema, "domain");
-
-module.exports = Domain;
+export const Domain = mongoose.model('Domain', DomainSchema, 'domain');

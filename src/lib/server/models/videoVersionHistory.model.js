@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-const { CommonSchema } = require('./common.model');
-
+import mongoose from 'mongoose';
 const VideoVersionHistorySchema = new mongoose.Schema(
 	{
 		parentVideoId: {
@@ -30,6 +28,10 @@ const VideoVersionHistorySchema = new mongoose.Schema(
 			type: String,
 			default: ''
 		},
+		keywords: {
+			type: String,
+			default: ''
+		},
 		metadata: {
 			type: String,
 			default: ''
@@ -48,17 +50,16 @@ const VideoVersionHistorySchema = new mongoose.Schema(
 		description: { type: String, default: '' },
 		userCreatedBy: { type: String, default: '' },
 		userUpdatedBy: { type: String, default: '' },
-		backgroundMusic: { type: String }
+		backgroundMusic: { type: String, default: '' },
+		channelId: { type: String, required: true }
 	},
 	{
 		timestamps: true
 	}
 );
 
-const VideoVersionHistory = mongoose.model(
+export const VideoVersionHistory = mongoose.model(
 	'VideoVersionHistorySchema',
 	VideoVersionHistorySchema,
 	'video_version_history'
 );
-
-module.exports = VideoVersionHistory;

@@ -3,4 +3,4 @@
 </script>
 
 <h1>{page.status} {page.error.message}</h1>
-<a href="/login">Login</a>
+<a href="/long">Go Back</a>

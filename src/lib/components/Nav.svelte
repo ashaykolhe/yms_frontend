@@ -7,35 +7,49 @@
 	type link = {
 		path: string;
 		text: string;
-		protected: boolean;
 	};
 
 	const links: link[] = [
 		{
-			path: '/dashboard',
-			text: 'Dashboard',
-			protected: true
+			path: '/long',
+			text: 'Long'
+		},
+		{
+			path: '/short',
+			text: 'Short'
+		},
+		{
+			path: '/domain',
+			text: 'Domain'
+		},
+		{
+			path: '/videostatus',
+			text: 'Video Status'
+		},
+		{
+			path: '/user',
+			text: 'User'
+		},
+		{
+			path: '/idea',
+			text: 'Idea'
+		},
+		{
+			path: '/channel',
+			text: 'Channel'
 		}
 	];
 </script>
 
+<!-- {isAdmin} -->
 <nav>
 	<ul>
 		{#each links as link}
-			<!-- {#if link.path === '/' || logged_in === link.protected || !isAdmin} -->
-			{@const aria_current = $page.url.pathname == link.path ? 'page' : 'false'}
 			<li>
-				<a href={link.path} aria-current={aria_current}>
+				<a href={link.path}>
 					{link.text}
 				</a>
 			</li>
-			<!-- {/if} -->
-			{#if isAdmin}
-				<!-- {@const aria_current = $page.url.pathname == '/admin' ? 'page' : 'false'} -->
-				<li>
-					<a href="/admin" aria-current={aria_current}> Admin </a>
-				</li>
-			{/if}
 		{/each}
 		<li>
 			<form action="/logout" method="POST" class="logout-form">
@@ -44,17 +58,3 @@
 		</li>
 	</ul>
 </nav>
-
-<style>
-	nav {
-		padding-block: 1.25rem;
-		background-color: var(--nav-color);
-	}
-	ul {
-		list-style-type: none;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 1.25rem;
-	}
-</style>

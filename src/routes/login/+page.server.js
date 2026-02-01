@@ -1,5 +1,5 @@
 import { error, fail, json, redirect } from '@sveltejs/kit';
-import { cookie_options } from '../../lib/server/utils.js';
+import { cookie_options, formBody } from '../../lib/server/utils.js';
 import { User } from '$lib/server/models/user.model.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -11,10 +11,17 @@ import { SECRET_JWT_KEY } from '$env/static/private';
 
 export const actions = {
 	login: async ({ request, cookies }) => {
-		const data = await request.formData();
-		const email = data.get('email');
-		const password = data.get('password');
-		console.log(email, password);
+		const formdata = await request.formData();
+		const data = formBody(formdata);
+		// console.table([...data.entries()]);
+		// console.log([...data.entries()]);
+		console.log('formbody');
+		console.log(data);
+		// const email = data.get('email');
+		// const password = data.get('password');
+		const email = data.email;
+		const password = data.password;
+		console.log('email ' + email + ' password ' + password);
 		const hashedPassword = await bcrypt.hash(password, 10);
 		console.log(hashedPassword);
 		const user = await User.findOne({
@@ -22,6 +29,7 @@ export const actions = {
 		}).exec();
 
 		if (user) {
+			console.log('user ' + user);
 			const match = await bcrypt.compare(password, user.password);
 			if (match) {
 				try {
@@ -29,7 +37,8 @@ export const actions = {
 						{
 							userId: user._id,
 							isAdmin: user.isAdmin,
-							email: user.email
+							email: user.email,
+							name: user.name
 						},
 						SECRET_JWT_KEY,
 						{ expiresIn: '12h' }
@@ -38,7 +47,7 @@ export const actions = {
 				} catch (err) {
 					return error(400, { message: err.message });
 				}
-				throw redirect(301, '/dashboard');
+				throw redirect(301, '/long');
 			}
 		}
 		return fail(400, { email, message: 'Invalid username/email or password' });

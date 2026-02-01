@@ -1,0 +1,27 @@
+<script lang="ts">
+	import { enhance } from '$app/forms';
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
+	export let callback;
+	function logout() {
+		callback();
+	}
+</script>
+
+<Dialog.Root>
+	<form>
+		<Dialog.Trigger class={buttonVariants({ variant: 'ghost', size: 'logoutdefault' })}
+			><span class="cursor-pointer">Logout</span></Dialog.Trigger
+		>
+		<Dialog.Content class="sm:max-w-[425px]">
+			<Dialog.Header>
+				<Dialog.Title>Logout?</Dialog.Title>
+				<!-- <Dialog.Description>Wanna logout?</Dialog.Description> -->
+			</Dialog.Header>
+			<Dialog.Footer>
+				<Dialog.Close class={buttonVariants({ variant: 'secondary' })}>Cancel</Dialog.Close>
+				<Button onclick={logout}>Logout</Button>
+			</Dialog.Footer>
+		</Dialog.Content>
+	</form>
+</Dialog.Root>

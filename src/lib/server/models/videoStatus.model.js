@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
-const { CommonSchema } = require("./common.model");
-
+import mongoose from 'mongoose';
 const StatusSchema = new mongoose.Schema(
 	{
 		status: [
@@ -14,6 +12,4 @@ const StatusSchema = new mongoose.Schema(
 	}
 );
 
-const Status = mongoose.model("Status", StatusSchema, "video_status");
-
-module.exports = Status;
+export const Status = mongoose.model('Status', StatusSchema, 'video_status');

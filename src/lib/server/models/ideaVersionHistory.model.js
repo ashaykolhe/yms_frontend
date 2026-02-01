@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const { CommonSchema } = require("./common.model");
+import mongoose from 'mongoose';
 
 const IdeaVersionHistorySchema = new mongoose.Schema(
 	{
@@ -11,17 +10,16 @@ const IdeaVersionHistorySchema = new mongoose.Schema(
 		archived: { type: Boolean, default: false },
 		softDelete: { type: Boolean, default: false },
 		userCreatedBy: { type: String, required: true },
-		userUpdatedBy: { type: String, required: true }
+		userUpdatedBy: { type: String, required: true },
+		channelId: { type: String, required: true }
 	},
 	{
 		timestamps: true
 	}
 );
 
-const IdeaVersionHistory = mongoose.model(
-  "IdeaVersionHistory",
-  IdeaVersionHistorySchema,
-  "idea_version_history",
+export const IdeaVersionHistory = mongoose.model(
+	'IdeaVersionHistory',
+	IdeaVersionHistorySchema,
+	'idea_version_history'
 );
-
-module.exports = IdeaVersionHistory;

@@ -26,6 +26,10 @@ const VideoSchema = new mongoose.Schema(
 			type: String,
 			default: ''
 		},
+		keywords: {
+			type: String,
+			default: ''
+		},
 		metadata: {
 			type: String,
 			default: ''
@@ -41,11 +45,12 @@ const VideoSchema = new mongoose.Schema(
 			type: String,
 			default: ''
 		},
-		title: { type: String, default: '' },
+		title: { type: String, default: '', unique: true },
 		description: { type: String, default: '' },
 		userCreatedBy: { type: String, default: '' },
 		userUpdatedBy: { type: String, default: '' },
-		backgroundMusic: { type: String, default: '' }
+		backgroundMusic: { type: String, default: '' },
+		channelId: { type: String, required: true }
 	},
 	{
 		timestamps: true

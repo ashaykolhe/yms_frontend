@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
-const { CommonSchema } = require("./common.model");
-
+import mongoose from 'mongoose';
 const IdeaSchema = new mongoose.Schema(
 	{
 		title: {
@@ -11,13 +9,12 @@ const IdeaSchema = new mongoose.Schema(
 		archived: { type: Boolean, default: false },
 		softDelete: { type: Boolean, default: false },
 		userCreatedBy: { type: String, required: true },
-		userUpdatedBy: { type: String, required: true }
+		userUpdatedBy: { type: String, required: true },
+		channelId: { type: String, required: true }
 	},
 	{
 		timestamps: true
 	}
 );
 
-const Idea = mongoose.model("Idea", IdeaSchema, "idea");
-
-module.exports = Idea;
+export const Idea = mongoose.model('Idea', IdeaSchema, 'idea');
