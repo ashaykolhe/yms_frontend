@@ -52,6 +52,8 @@
 	import { useSortable } from '@dnd-kit-svelte/svelte/sortable';
 	import Edit from '@tabler/icons-svelte/icons/edit';
 	import ArrowUpDownIcon from '@lucide/svelte/icons/arrow-up-down';
+	import LongDataTableAddNew from './long-data-table-add-edit-view.svelte';
+	import LongDataTableAddEditView from './long-data-table-add-edit-view.svelte';
 
 	let { items, isAdmin }: { items: LongSchema[] } = $props();
 	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 });
@@ -262,9 +264,10 @@
 <Tabs.Root value="outline" class="w-full flex-col justify-start gap-6">
 	<div class="flex items-center justify-between px-4 lg:px-6">
 		<div class="flex items-center gap-2">
-			<Button variant="outline" size="sm">
-				<span class="hidden lg:inline">Add Section</span>
-			</Button>
+			<!-- <Button variant="outline" size="sm">
+				<span class="hidden lg:inline"><LongDataTableAddNew /> </span>
+			</Button> -->
+			<LongDataTableAddEditView />
 			{#if isAdmin}
 				<Button variant="outline" size="sm">
 					<span class="hidden lg:inline">Soft Delete All</span>

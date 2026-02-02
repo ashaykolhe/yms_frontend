@@ -46,10 +46,10 @@ const VideoVersionHistorySchema = new mongoose.Schema(
 		domain: {
 			type: String
 		},
-		title: { type: String, default: '' },
+		title: { type: String, default: '', required: true },
 		description: { type: String, default: '' },
-		userCreatedBy: { type: String, default: '' },
-		userUpdatedBy: { type: String, default: '' },
+		userCreatedBy: { type: String, default: '', required: true },
+		userUpdatedBy: { type: String, default: '', required: true },
 		backgroundMusic: { type: String, default: '' },
 		channelId: { type: String, required: true }
 	},

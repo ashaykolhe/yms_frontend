@@ -12,8 +12,6 @@ in actions, check if action allowed - locals.actionAllowed = true other wise ret
 
 clone/copy/duplicate videos
 
-
-
 long
 short
 idea
@@ -27,7 +25,7 @@ menu top left corner
 top right Welcome {username}
 top right Clock
 
-view edit  delete  archive(admin)  permanent(admin) delete  view history  clone(cloned showed appear just below)
+view edit delete archive(admin) permanent(admin) delete view history clone(cloned showed appear just below)
 no softdelete for domain and videostatus
 
 delete view history(admin)
@@ -45,7 +43,6 @@ archive selected
 soft delete selected
 delete selected permanently
 
-
 loading page/icon while data is being loaded
 
 pinned/fav video - always on top of the list -> sort by pin + latest
@@ -57,15 +54,29 @@ npm run lint
 
 logout -> confirm dialog
 
-
-
 instead of load function in page.server.js, use server.js GET function -> take channelId as input -> use fetch onmount and use fetch on formsubmit to refresh list
 
 shoe loading uindicator when list is loading
-
-
 
 dont load by default. select dchannel then load. keep channel default selected when visiting other pages.
 cvhannel option aftyer youtube management system
 
 filter videos and everything by channel once channel select is done
+
+auth in all actions
+
+user - email cannot be changed
+
+
+
+view button -> click not working everytime -> check if addeditview commponent works with every click and id can be sent to it as prop
+
+show message success and close dialog on save after 2 seconds
+
+refresh list automatically and also give refresh button next to it
+
+video version history should get saved
+
+select current channelid by default and show it's videos
+
+request being sent on cancel button in add new dialog

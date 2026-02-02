@@ -17,7 +17,7 @@
 	import SectionCards from '$lib/components/section-cards.svelte';
 	import ChartAreaInteractive from '$lib/components/chart-area-interactive.svelte';
 	import DataTable from '$lib/components/long-data-table.svelte';
-	import { getContext, onMount } from 'svelte';
+	import { getContext, onMount, setContext } from 'svelte';
 	let channelId = $state.raw('');
 	function setChannelId(channelIdIn) {
 		channelId = channelIdIn;
@@ -42,6 +42,7 @@
 
 	$effect(() => {
 		console.log('effect ' + channelId);
+		setContext('channelId', channelId);
 		promise = fetchData(channelId);
 	});
 </script>
@@ -50,15 +51,17 @@
 {#await promise}
 	<div>Loading...</div>
 {:then items}
-	<div class="flex flex-1 flex-col">
-		<div class="@container/main flex flex-1 flex-col gap-2">
-			<div class="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-				<!-- <DataTable {customdata} /> -->
-				<!-- {#each items as item} -->
-				<!-- {item} -->
-				<!-- {/each} -->
-				<DataTable {items} {isAdmin} />
+	{#if items.length > 0}
+		<div class="flex flex-1 flex-col">
+			<div class="@container/main flex flex-1 flex-col gap-2">
+				<div class="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+					<!-- <DataTable {customdata} /> -->
+					<!-- {#each items as item} -->
+					<!-- {item} -->
+					<!-- {/each} -->
+					<DataTable {items} {isAdmin} />
+				</div>
 			</div>
 		</div>
-	</div>
+	{/if}
 {/await}

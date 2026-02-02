@@ -36,7 +36,7 @@ const createVideo = async (req, res) => {
 
 const updateVideo = async (req, res) => {
   try {
-    req.body.userCreatedBy = req.loggedInUser.email;
+    // req.body.userCreatedBy = req.loggedInUser.email;
     req.body.userUpdatedBy = req.loggedInUser.email;
     const { id } = req.params;
 

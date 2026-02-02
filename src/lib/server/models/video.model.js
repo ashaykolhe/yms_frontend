@@ -45,10 +45,10 @@ const VideoSchema = new mongoose.Schema(
 			type: String,
 			default: ''
 		},
-		title: { type: String, default: '', unique: true },
+		title: { type: String, default: '', unique: true, required: true },
 		description: { type: String, default: '' },
-		userCreatedBy: { type: String, default: '' },
-		userUpdatedBy: { type: String, default: '' },
+		userCreatedBy: { type: String, default: '', required: true },
+		userUpdatedBy: { type: String, default: '', required: true },
 		backgroundMusic: { type: String, default: '' },
 		channelId: { type: String, required: true }
 	},
