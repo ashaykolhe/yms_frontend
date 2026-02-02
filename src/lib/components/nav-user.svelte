@@ -10,7 +10,7 @@
 	import { onMount } from 'svelte';
 	import LogoutDialog from './logout-dialog.svelte';
 	import { enhance } from '$app/forms';
-	let formElement: HTMLFormElement;
+
 	let { user }: { user: { name: string; email: string; avatar: string } } = $props();
 
 	const sidebar = Sidebar.useSidebar();
@@ -38,15 +38,8 @@
 		}, 1000);
 		// return clearInterval(interval);
 	});
-
-	function logout() {
-		if (formElement) {
-			formElement.requestSubmit();
-		}
-	}
 </script>
 
-<form action="/logout" method="POST" use:enhance bind:this={formElement}></form>
 <Sidebar.Menu>
 	<Sidebar.MenuItem>
 		<DropdownMenu.Root>
@@ -67,15 +60,9 @@
 							<span class="truncate text-xs text-muted-foreground">
 								{user.email}
 							</span>
-							<!-- <span>{hour} : {min} : {sec} {dayOrNight}</span> -->
 							<span>{hour} : {min} : {sec}</span>
-							<LogoutDialog callback={logout} />
+							<LogoutDialog />
 						</div>
-						<!-- <DotsVerticalIcon class="ms-auto size-4" /> -->
-						<!-- <LogoutIcon /> -->
-						<!-- <form action="/logout" method="POST" class="logout-form"> -->
-						<!-- <button class="cursor-pointer">Logout</button> -->
-						<!-- </form> -->
 					</Sidebar.MenuButton>
 				{/snippet}
 			</DropdownMenu.Trigger>

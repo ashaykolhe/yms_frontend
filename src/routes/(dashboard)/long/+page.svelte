@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { data } = $props();
+	let { data, form } = $props();
 	let isAdmin = data.isAdmin;
 	// let items = data.longVideos;
 	let username = data.username;
@@ -7,6 +7,10 @@
 	// export let { isAdmin, items, username, useremail } = $props();
 	console.log('name:- ' + username);
 	console.log('useremail:- ' + useremail);
+	let message = $state('');
+	// $inspect(data);
+	// $inspect(form);
+	// $inspect(message);
 	// console.log('isAdmin:- ' + isAdmin);
 	// console.log(items);
 
@@ -17,6 +21,10 @@
 	import SectionCards from '$lib/components/section-cards.svelte';
 	import ChartAreaInteractive from '$lib/components/chart-area-interactive.svelte';
 	import DataTable from '$lib/components/long-data-table.svelte';
+	import * as Alert from '$lib/components/ui/alert/index.js';
+	import CheckCircle2Icon from '@lucide/svelte/icons/check-circle-2';
+	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
+	import PopcornIcon from '@lucide/svelte/icons/popcorn';
 	import { getContext, onMount, setContext } from 'svelte';
 	let channelId = $state.raw('');
 	function setChannelId(channelIdIn) {
@@ -44,10 +52,27 @@
 		console.log('effect ' + channelId);
 		setContext('channelId', channelId);
 		promise = fetchData(channelId);
+		// setContext('form', form);
+	});
+
+	$effect(() => {
+		message = form?.message;
+		setTimeout(() => {
+			message = '';
+		}, 2000);
 	});
 </script>
 
 <SiteHeader page="Long" callback={setChannelId} />
+{#if form?.success && message?.length > 0}
+	<div class="grid w-full max-w-xl items-start gap-4">
+		<Alert.Root variant="destructive">
+			<!-- <CheckCircle2Icon /> -->
+			<Alert.Title>{message}</Alert.Title>
+			<!-- <Alert.Description>This is an alert with icon, title and description.</Alert.Description> -->
+		</Alert.Root>
+	</div>
+{/if}
 {#await promise}
 	<div>Loading...</div>
 {:then items}
@@ -59,7 +84,7 @@
 					<!-- {#each items as item} -->
 					<!-- {item} -->
 					<!-- {/each} -->
-					<DataTable {items} {isAdmin} />
+					<DataTable {items} {isAdmin} {form} />
 				</div>
 			</div>
 		</div>

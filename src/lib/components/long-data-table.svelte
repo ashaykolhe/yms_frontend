@@ -55,7 +55,7 @@
 	import LongDataTableAddNew from './long-data-table-add-edit-view.svelte';
 	import LongDataTableAddEditView from './long-data-table-add-edit-view.svelte';
 
-	let { items, isAdmin }: { items: LongSchema[] } = $props();
+	let { items, isAdmin, form }: { items: LongSchema[] } = $props();
 	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 });
 	let sorting = $state<SortingState>([]);
 	let columnFilters = $state<ColumnFiltersState>([]);
@@ -267,7 +267,7 @@
 			<!-- <Button variant="outline" size="sm">
 				<span class="hidden lg:inline"><LongDataTableAddNew /> </span>
 			</Button> -->
-			<LongDataTableAddEditView />
+			<LongDataTableAddEditView {form} />
 			{#if isAdmin}
 				<Button variant="outline" size="sm">
 					<span class="hidden lg:inline">Soft Delete All</span>

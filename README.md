@@ -80,3 +80,9 @@ video version history should get saved
 select current channelid by default and show it's videos
 
 request being sent on cancel button in add new dialog
+
+reset password link via notification -> user able to update password
+
+notification collection -> you created {title of video}, you updated {title of video} -> show notifications latest first. when dismiss notification, update seen attribute. Dont show seen notifications again. View all notifications.
+
+if error, keep dialog open and show error
