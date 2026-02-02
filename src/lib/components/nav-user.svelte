@@ -17,7 +17,7 @@
 
 	let date = $state(new Date());
 	let hour = $derived.by(() => {
-		let h = date.getHours() - 12;
+		let h = date.getHours();
 		return h <= 9 ? '0' + h : h;
 	});
 	let min = $derived.by(() => {
@@ -29,12 +29,12 @@
 		let s = date.getSeconds();
 		return s <= 9 ? '0' + s : s;
 	});
-	let dayOrNight = 'AM';
+	// let dayOrNight = 'AM';
 
 	onMount(() => {
 		const interval = setInterval(() => {
 			date = new Date();
-			dayOrNight = hour >= 12 ? 'PM' : 'AM';
+			// dayOrNight = hour >= 12 ? 'PM' : 'AM';
 		}, 1000);
 		// return clearInterval(interval);
 	});
@@ -62,11 +62,13 @@
 							<Avatar.Fallback class="rounded-lg">CN</Avatar.Fallback>
 						</Avatar.Root> -->
 						<div class="grid flex-1 text-start text-sm leading-tight">
+							<!-- <span>Youtube Management System</span> -->
 							<span class="truncate font-medium">{user.name}</span>
 							<span class="truncate text-xs text-muted-foreground">
 								{user.email}
 							</span>
-							<span>{hour} : {min} : {sec} {dayOrNight}</span>
+							<!-- <span>{hour} : {min} : {sec} {dayOrNight}</span> -->
+							<span>{hour} : {min} : {sec}</span>
 							<LogoutDialog callback={logout} />
 						</div>
 						<!-- <DotsVerticalIcon class="ms-auto size-4" /> -->

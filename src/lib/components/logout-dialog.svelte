@@ -11,7 +11,7 @@
 <Dialog.Root>
 	<form>
 		<Dialog.Trigger class={buttonVariants({ variant: 'ghost', size: 'logoutdefault' })}
-			><span class="cursor-pointer">Logout</span></Dialog.Trigger
+			><span class="cursor-pointer text-red-600">Logout</span></Dialog.Trigger
 		>
 		<Dialog.Content class="sm:max-w-[425px]">
 			<Dialog.Header>

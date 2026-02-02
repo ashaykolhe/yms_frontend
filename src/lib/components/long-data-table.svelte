@@ -251,6 +251,7 @@
 		alert(id);
 	}
 	function view(id) {
+		console.log('id ' + id);
 		alert(id);
 	}
 	function viewhistory(id) {

@@ -67,3 +67,5 @@ shoe loading uindicator when list is loading
 
 dont load by default. select dchannel then load. keep channel default selected when visiting other pages.
 cvhannel option aftyer youtube management system
+
+filter videos and everything by channel once channel select is done

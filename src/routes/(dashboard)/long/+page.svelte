@@ -17,26 +17,36 @@
 	import SectionCards from '$lib/components/section-cards.svelte';
 	import ChartAreaInteractive from '$lib/components/chart-area-interactive.svelte';
 	import DataTable from '$lib/components/long-data-table.svelte';
-	import { onMount } from 'svelte';
+	import { getContext, onMount } from 'svelte';
+	let channelId = $state.raw('');
+	function setChannelId(channelIdIn) {
+		channelId = channelIdIn;
+		console.log('setChannelId ' + channelId);
+	}
 	let promise = $state(fetchData(''));
-	async function fetchData(channelId) {
-		const response = await fetch(`/long/${channelId}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
-			}
-		});
+	async function fetchData(channelIdFetch) {
+		if (channelId) {
+			console.log('fetchData ' + channelIdFetch);
+			const response = await fetch(`/long/${channelIdFetch}`, {
+				method: 'GET',
+				headers: {
+					'content-type': 'application/json'
+				}
+			});
 
-		const items = await response.json();
-		return items;
+			const items = await response.json();
+			return items;
+		}
+		return [];
 	}
 
-	onMount(() => {
-		promise = fetchData('channel');
+	$effect(() => {
+		console.log('effect ' + channelId);
+		promise = fetchData(channelId);
 	});
 </script>
 
-<SiteHeader page="Long" />
+<SiteHeader page="Long" callback={setChannelId} />
 {#await promise}
 	<div>Loading...</div>
 {:then items}
