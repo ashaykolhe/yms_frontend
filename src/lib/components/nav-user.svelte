@@ -54,7 +54,7 @@
 							<Avatar.Image src={user.avatar} alt={user.name} />
 							<Avatar.Fallback class="rounded-lg">CN</Avatar.Fallback>
 						</Avatar.Root> -->
-						<div class="grid flex-1 text-start text-sm leading-tight">
+						<div class="grid flex-1 text-center text-sm leading-tight">
 							<!-- <span>Youtube Management System</span> -->
 							<span class="truncate font-medium">{user.name}</span>
 							<span class="truncate text-xs text-muted-foreground">

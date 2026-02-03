@@ -14,7 +14,7 @@
 		type SortingState,
 		type VisibilityState
 	} from '@tanstack/table-core';
-	import type { LongSchema } from './long-schemas.js';
+	// import type { LongSchema } from './long-schemas.js';
 	import type { Attachment } from 'svelte/attachments';
 	import { RestrictToVerticalAxis } from '@dnd-kit/abstract/modifiers';
 	import { createSvelteTable } from '$lib/components/ui/data-table/data-table.svelte.js';

@@ -22,17 +22,34 @@ export const load = async ({ locals }) => {
 export const actions = {
 	addNewLongVideo: async ({ request, locals }) => {
 		let formdata = await request.formData();
+		// console.log('formdata');
 		// console.log(formdata);
 		let data = formBody(formdata);
+		// console.log('data');
+		// console.log(data);
 		// console.log('formbody');
 		// console.log(data);
-		// const title = data.title;
+		// console.log('data.title' + data.title);
+		if (!data.title) {
+			return { error: true, message: 'Title must be present' };
+		}
 		// const description = data.description;
 		// console.log('addNewLongVideo title ' + title + ' addNewLongVideo description ' + description);
 		try {
 			data.userCreatedBy = locals.useremail;
 			data.userUpdatedBy = locals.useremail;
-			// console.log(data);
+			if (data?.archived === 'on') {
+				data.archived = true;
+			} else {
+				data.archived = false;
+			}
+
+			if (data?.softDelete === 'on') {
+				data.softDelete = true;
+			} else {
+				data.softDelete = false;
+			}
+
 			const video = await Video.create(data);
 			console.log(video);
 			// const temp = video;

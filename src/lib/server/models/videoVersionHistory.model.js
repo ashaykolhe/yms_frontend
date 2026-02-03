@@ -12,11 +12,15 @@ const VideoVersionHistorySchema = new mongoose.Schema(
 			type: String,
 			default: ''
 		},
-		backgroundVisualsVisuals: {
+		backgroundVisuals: {
 			type: String,
 			default: ''
 		},
-		themePrompt: {
+		videoPrompt: {
+			type: String,
+			default: ''
+		},
+		videoText: {
 			type: String,
 			default: ''
 		},
@@ -50,7 +54,9 @@ const VideoVersionHistorySchema = new mongoose.Schema(
 		description: { type: String, default: '' },
 		userCreatedBy: { type: String, default: '', required: true },
 		userUpdatedBy: { type: String, default: '', required: true },
+		backgroundMusicPrompt: { type: String, default: '' },
 		backgroundMusic: { type: String, default: '' },
+		thumbnailPrompt: { type: String, default: '' },
 		channelId: { type: String, required: true }
 	},
 	{

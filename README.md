@@ -47,16 +47,16 @@ loading page/icon while data is being loaded
 
 pinned/fav video - always on top of the list -> sort by pin + latest
 
-all data retrieval channelid wise -> load params
+*all data retrieval channelid wise -> load params
 
 npm run format
 npm run lint
 
-logout -> confirm dialog
+*logout -> confirm dialog
 
-instead of load function in page.server.js, use server.js GET function -> take channelId as input -> use fetch onmount and use fetch on formsubmit to refresh list
+*instead of load function in page.server.js, use server.js GET function -> take channelId as input -> use fetch onmount and use fetch on formsubmit to refresh list
 
-shoe loading uindicator when list is loading
+show loading uindicator when list is loading
 
 dont load by default. select dchannel then load. keep channel default selected when visiting other pages.
 cvhannel option aftyer youtube management system
@@ -71,18 +71,23 @@ user - email cannot be changed
 
 view button -> click not working everytime -> check if addeditview commponent works with every click and id can be sent to it as prop
 
-show message success and close dialog on save after 2 seconds
+*show message success and close dialog on save after 2 seconds
 
 refresh list automatically and also give refresh button next to it
 
-video version history should get saved
+*video version history should get saved
 
 select current channelid by default and show it's videos
 
-request being sent on cancel button in add new dialog
+*request being sent on cancel button in add new dialog
 
 reset password link via notification -> user able to update password
 
 notification collection -> you created {title of video}, you updated {title of video} -> show notifications latest first. when dismiss notification, update seen attribute. Dont show seen notifications again. View all notifications.
 
-if error, keep dialog open and show error
+*if error, keep dialog open and show error
+
+refresh datatable on save
+
+
+*if error, remove in few seconds
