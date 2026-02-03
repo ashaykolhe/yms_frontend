@@ -34,7 +34,7 @@
 		}, 100);
 		setTimeout(() => {
 			message = '';
-		}, 2000);
+		}, 4000);
 	}
 
 	function closeDialog() {
@@ -141,7 +141,7 @@
 			<div class="-mb-4 flex min-h-180 flex-col gap-6">
 				<Tabs.Root bind:value={bindtitle}>
 					<Tabs.List>
-						<Tabs.Trigger value="titledescriptionkeywords">Title & Description</Tabs.Trigger>
+						<Tabs.Trigger value="titledescriptionkeywords">Title, Description & Keywords</Tabs.Trigger>
 						<Tabs.Trigger value="backgroundVisuals">Background Visuals</Tabs.Trigger>
 						<Tabs.Trigger value="video">Video</Tabs.Trigger>
 						<Tabs.Trigger value="speechToText">Speech to Text</Tabs.Trigger>

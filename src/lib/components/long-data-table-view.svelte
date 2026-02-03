@@ -17,8 +17,7 @@
 	let bindtitle = $state('titledescriptionkeywords');
 	console.log('getContext(channelId) ' + getContext('channelId'));
 	let isOpen = $state(false);
-	let { form, id, isAdmin } = $props();
-	$inspect(form);
+	let { id, isAdmin } = $props();
 	let returndata = $state('');
 
 	function closeDialog() {
@@ -121,7 +120,7 @@
 		<div class="-mb-4 flex min-h-180 flex-col gap-6">
 			<Tabs.Root bind:value={bindtitle}>
 				<Tabs.List>
-					<Tabs.Trigger value="titledescriptionkeywords">Title & Description</Tabs.Trigger>
+					<Tabs.Trigger value="titledescriptionkeywords">Title, Description & Keywords</Tabs.Trigger>
 					<Tabs.Trigger value="backgroundVisuals">Background Visuals</Tabs.Trigger>
 					<Tabs.Trigger value="video">Video</Tabs.Trigger>
 					<Tabs.Trigger value="speechToText">Speech to Text</Tabs.Trigger>
@@ -164,7 +163,12 @@
 						/>
 					</div>
 					<div class="grid gap-3">
-						<NativeSelect.Root class="w-390" name="domain" value={returndata?.domain ?? ''} disabled>
+						<NativeSelect.Root
+							class="w-390"
+							name="domain"
+							value={returndata?.domain ?? ''}
+							disabled
+						>
 							<NativeSelect.Option value="">Select domain</NativeSelect.Option>
 							{#each domains as domain (domain._id)}
 								<NativeSelect.Option value={domain.title}>
@@ -174,7 +178,12 @@
 						</NativeSelect.Root>
 					</div>
 					<div class="grid gap-3">
-						<NativeSelect.Root class="w-390" name="status" value={returndata?.status ?? ''} disabled>
+						<NativeSelect.Root
+							class="w-390"
+							name="status"
+							value={returndata?.status ?? ''}
+							disabled
+						>
 							<NativeSelect.Option value="">Select status</NativeSelect.Option>
 							{#each statuses as status (status._id)}
 								<NativeSelect.Option value={status.title}>

@@ -454,6 +454,7 @@
 	{#if !IsSomePageRowsSelected && !IsAllPageRowsSelected}
 		<LongDataTableView {id} {isAdmin} />
 		<LongDataTableEdit {form} {refreshLongDataTable} {id} {isAdmin} />
+		<!-- <Button variant="outline">Delete</Button> -->
 	{/if}
 	<!-- <DropdownMenu.Root>
 		<DropdownMenu.Trigger class="flex size-8 text-muted-foreground data-[state=open]:bg-muted">
