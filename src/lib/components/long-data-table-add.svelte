@@ -124,7 +124,9 @@
 </script>
 
 <Dialog.Root bind:open={isOpen}>
-	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Add</Dialog.Trigger>
+	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })} disabled={!channelId}
+		>Add</Dialog.Trigger
+	>
 
 	<Dialog.Content class="min-w-400">
 		<form action="?/addNewLongVideo" method="POST" use:enhance>
@@ -136,7 +138,9 @@
 			<div class="-mb-4 flex min-h-180 flex-col gap-6">
 				<Tabs.Root bind:value={bindtitle}>
 					<Tabs.List>
-						<Tabs.Trigger value="titledescriptionkeywords">Title, Description & Keywords</Tabs.Trigger>
+						<Tabs.Trigger value="titledescriptionkeywords"
+							>Title, Description & Keywords</Tabs.Trigger
+						>
 						<Tabs.Trigger value="backgroundVisuals">Background Visuals</Tabs.Trigger>
 						<Tabs.Trigger value="video">Video</Tabs.Trigger>
 						<Tabs.Trigger value="speechToText">Speech to Text</Tabs.Trigger>
