@@ -16,6 +16,7 @@
 	} from '@tanstack/table-core';
 	// import type { LongSchema } from './long-schemas.js';
 	import type { Attachment } from 'svelte/attachments';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { RestrictToVerticalAxis } from '@dnd-kit/abstract/modifiers';
 	import { createSvelteTable } from '$lib/components/ui/data-table/data-table.svelte.js';
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
@@ -59,7 +60,7 @@
 	import LongDataTableView from './long-data-table-view.svelte';
 	import { enhance } from '$app/forms';
 
-	let { items, isAdmin, form}: { items: LongSchema[] } = $props();
+	let { items, isAdmin, form }: { items: LongSchema[] } = $props();
 	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 });
 	let sorting = $state<SortingState>([]);
 	let columnFilters = $state<ColumnFiltersState>([]);
@@ -456,10 +457,21 @@
 		<LongDataTableView {id} {isAdmin} />
 		<LongDataTableEdit {form} {id} {isAdmin} />
 		{#if isAdmin}
-			<form action="?/permanentDeleteLongVideo" method="POST" use:enhance>
-				<input type="hidden" name="_id" value={id} />
-				<Button variant="outline" type="submit">PD</Button>
-			</form>
+			<Dialog.Root>
+				<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>PD</Dialog.Trigger>
+				<Dialog.Content class="sm:max-w-[425px]">
+					<Dialog.Header>
+						<Dialog.Title>Delete?</Dialog.Title>
+					</Dialog.Header>
+					<Dialog.Footer>
+						<Dialog.Close class={buttonVariants({ variant: 'secondary' })}>Cancel</Dialog.Close>
+						<form action="?/permanentDeleteLongVideo" method="POST" use:enhance>
+							<input type="hidden" name="_id" value={id} />
+							<Button variant="outline" type="submit">PD</Button>
+						</form>
+					</Dialog.Footer>
+				</Dialog.Content>
+			</Dialog.Root>
 		{/if}
 	{/if}
 	<!-- <DropdownMenu.Root>
