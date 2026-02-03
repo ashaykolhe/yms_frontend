@@ -19,6 +19,7 @@
 	let channelId = $state(getContext('channelId'));
 	let isOpen = $state(false);
 	let { form } = $props();
+	$inspect(form);
 	let message = $state('');
 	function handleSubmit() {
 		setTimeout(() => {
@@ -115,13 +116,17 @@
 			title: 'PUBLISHED'
 		}
 	];
+
+	function handleSubmitForm(e) {
+		e.preventDefault();
+	}
 </script>
 
 <Dialog.Root bind:open={isOpen}>
 	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Add New</Dialog.Trigger>
 
 	<Dialog.Content class="min-w-400">
-		<form action="?/addNewLongVideo" method="POST" use:enhance>
+		<form action="?/addNewLongVideo" method="POST" use:enhance onsubmit={handleSubmitForm}>
 			<Dialog.Header>
 				<Dialog.Title>Add New</Dialog.Title>
 				<Dialog.Description>Add New Long Video</Dialog.Description>
@@ -151,6 +156,7 @@
 								id="description"
 								name="description"
 								class="min-h-80"
+								value={form?.returndata?.description ?? ''}
 							/>
 						</div>
 						<div class="grid gap-3">
@@ -159,6 +165,7 @@
 								id="keywords"
 								name="keywords"
 								class="min-h-30"
+								value={form?.returndata?.keywords ?? ''}
 							/>
 						</div>
 						<div class="grid gap-3">
@@ -191,6 +198,7 @@
 								id="backgroundVisualsPrompt"
 								name="backgroundVisualsPrompt"
 								class="min-h-30"
+								value={form?.returndata?.backgroundVisualsPrompt ?? ''}
 							/>
 						</div>
 						<div class="grid gap-3">
@@ -199,6 +207,7 @@
 								id="backgroundVisuals"
 								name="backgroundVisuals"
 								class="min-h-130"
+								value={form?.returndata?.backgroundVisuals ?? ''}
 							/>
 						</div>
 					</Tabs.Content>
@@ -209,6 +218,7 @@
 								id="videoPrompt"
 								name="videoPrompt"
 								class="min-h-30"
+								value={form?.returndata?.videoPrompt ?? ''}
 							/>
 						</div>
 						<div class="grid gap-3">
@@ -217,6 +227,7 @@
 								id="videoText"
 								name="videoText"
 								class="min-h-130"
+								value={form?.returndata?.videoText ?? ''}
 							/>
 						</div>
 					</Tabs.Content>
@@ -227,10 +238,17 @@
 								id="speechToTextOutput"
 								name="speechToTextOutput"
 								class="min-h-80"
+								value={form?.returndata?.speechToTextOutput ?? ''}
 							/>
 						</div>
 						<div class="grid gap-3">
-							<Textarea placeholder="Add SRT here" id="srt" name="srt" class="min-h-80" />
+							<Textarea
+								placeholder="Add SRT here"
+								id="srt"
+								name="srt"
+								class="min-h-80"
+								value={form?.returndata?.srt ?? ''}
+							/>
 						</div>
 					</Tabs.Content>
 					<Tabs.Content value="metadata">
@@ -240,6 +258,7 @@
 								id="metadata"
 								name="metadata"
 								class="min-h-160"
+								value={form?.returndata?.metadata ?? ''}
 							/>
 						</div>
 					</Tabs.Content>
@@ -250,6 +269,7 @@
 								id="backgroundMusicPrompt"
 								name="backgroundMusicPrompt"
 								class="min-h-30"
+								value={form?.returndata?.backgroundMusicPrompt ?? ''}
 							/>
 						</div>
 						<div class="grid gap-3">
@@ -258,6 +278,7 @@
 								id="backgroundMusic"
 								name="backgroundMusic"
 								class="min-h-130"
+								value={form?.returndata?.backgroundMusic ?? ''}
 							/>
 						</div>
 					</Tabs.Content>
@@ -299,20 +320,13 @@
 								id="thumbnailPrompt"
 								name="thumbnailPrompt"
 								class="min-h-140"
+								value={form?.returndata?.thumbnailPrompt ?? ''}
 							/>
 						</div>
 					</Tabs.Content>
 				</Tabs.Root>
 			</div>
-			{#if form?.success && message?.length > 0}
-				<div class="grid w-full max-w-xl items-start gap-4">
-					<Alert.Root>
-						<!-- <CheckCircle2Icon /> -->
-						<Alert.Title>{message}</Alert.Title>
-						<!-- <Alert.Description>This is an alert with icon, title and description.</Alert.Description> -->
-					</Alert.Root>
-				</div>
-			{:else if form?.error && message.length > 0}
+			{#if form?.error && message?.length > 0}
 				<Alert.Root variant="destructive">
 					<PopcornIcon />
 					<Alert.Title>{message}</Alert.Title>

@@ -31,7 +31,8 @@ export const actions = {
 		// console.log(data);
 		// console.log('data.title' + data.title);
 		if (!data.title) {
-			return { error: true, message: 'Title must be present' };
+			return fail(400, { returndata: data, error: true, message: 'Title must be present' });
+			// return { error: true, message: 'Title must be present' };
 		}
 		// const description = data.description;
 		// console.log('addNewLongVideo title ' + title + ' addNewLongVideo description ' + description);
@@ -63,8 +64,8 @@ export const actions = {
 			VideoVersionHistory.create(newVideo);
 			return { success: true, message: `You created ${video.title} long video` };
 		} catch (err) {
-			// return fail(400, { success: false, message: err.message });
-			return { error: true, message: err.message };
+			return fail(400, { returndata: data, error: true, message: err.message });
+			// return { error: true, message: err.message };
 			// return error(400, { message: err.message });
 		}
 	}
