@@ -73,7 +73,7 @@ view button -> click not working everytime -> check if addeditview commponent wo
 
 *show message success and close dialog on save after 2 seconds
 
-refresh list automatically and also give refresh button next to it
+*refresh list automatically and also give refresh button next to it
 
 *video version history should get saved
 
@@ -87,7 +87,9 @@ notification collection -> you created {title of video}, you updated {title of v
 
 *if error, keep dialog open and show error
 
-refresh datatable on save
+*refresh datatable on save
 
 
 *if error, remove in few seconds
+
+description in data table - truncate

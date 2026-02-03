@@ -18,13 +18,15 @@
 	console.log('getContext(channelId) ' + getContext('channelId'));
 	let channelId = $state(getContext('channelId'));
 	let isOpen = $state(false);
-	let { form } = $props();
+	let { form, refreshLongDataTable } = $props();
 	$inspect(form);
 	let message = $state('');
+	let returndata = $state('');
 	function handleSubmit() {
 		setTimeout(() => {
 			if (form?.error) {
 				message = form?.message;
+				returndata = form?.returndata;
 				isOpen = true;
 			} else {
 				closeDialog();
@@ -38,7 +40,9 @@
 	function closeDialog() {
 		isOpen = false;
 		message = '';
+		returndata = '';
 		console.log('isOpen ' + isOpen);
+		refreshLongDataTable(channelId);
 	}
 
 	function handleDomainChange(e) {
@@ -156,7 +160,7 @@
 								id="description"
 								name="description"
 								class="min-h-80"
-								value={form?.returndata?.description ?? ''}
+								value={returndata?.description ?? ''}
 							/>
 						</div>
 						<div class="grid gap-3">
@@ -165,7 +169,7 @@
 								id="keywords"
 								name="keywords"
 								class="min-h-30"
-								value={form?.returndata?.keywords ?? ''}
+								value={returndata?.keywords ?? ''}
 							/>
 						</div>
 						<div class="grid gap-3">
@@ -198,7 +202,7 @@
 								id="backgroundVisualsPrompt"
 								name="backgroundVisualsPrompt"
 								class="min-h-30"
-								value={form?.returndata?.backgroundVisualsPrompt ?? ''}
+								value={returndata?.backgroundVisualsPrompt ?? ''}
 							/>
 						</div>
 						<div class="grid gap-3">
@@ -207,7 +211,7 @@
 								id="backgroundVisuals"
 								name="backgroundVisuals"
 								class="min-h-130"
-								value={form?.returndata?.backgroundVisuals ?? ''}
+								value={returndata?.backgroundVisuals ?? ''}
 							/>
 						</div>
 					</Tabs.Content>
@@ -218,7 +222,7 @@
 								id="videoPrompt"
 								name="videoPrompt"
 								class="min-h-30"
-								value={form?.returndata?.videoPrompt ?? ''}
+								value={returndata?.videoPrompt ?? ''}
 							/>
 						</div>
 						<div class="grid gap-3">
@@ -227,7 +231,7 @@
 								id="videoText"
 								name="videoText"
 								class="min-h-130"
-								value={form?.returndata?.videoText ?? ''}
+								value={returndata?.videoText ?? ''}
 							/>
 						</div>
 					</Tabs.Content>
@@ -238,7 +242,7 @@
 								id="speechToTextOutput"
 								name="speechToTextOutput"
 								class="min-h-80"
-								value={form?.returndata?.speechToTextOutput ?? ''}
+								value={returndata?.speechToTextOutput ?? ''}
 							/>
 						</div>
 						<div class="grid gap-3">
@@ -247,7 +251,7 @@
 								id="srt"
 								name="srt"
 								class="min-h-80"
-								value={form?.returndata?.srt ?? ''}
+								value={returndata?.srt ?? ''}
 							/>
 						</div>
 					</Tabs.Content>
@@ -258,7 +262,7 @@
 								id="metadata"
 								name="metadata"
 								class="min-h-160"
-								value={form?.returndata?.metadata ?? ''}
+								value={returndata?.metadata ?? ''}
 							/>
 						</div>
 					</Tabs.Content>
@@ -269,7 +273,7 @@
 								id="backgroundMusicPrompt"
 								name="backgroundMusicPrompt"
 								class="min-h-30"
-								value={form?.returndata?.backgroundMusicPrompt ?? ''}
+								value={returndata?.backgroundMusicPrompt ?? ''}
 							/>
 						</div>
 						<div class="grid gap-3">
@@ -278,7 +282,7 @@
 								id="backgroundMusic"
 								name="backgroundMusic"
 								class="min-h-130"
-								value={form?.returndata?.backgroundMusic ?? ''}
+								value={returndata?.backgroundMusic ?? ''}
 							/>
 						</div>
 					</Tabs.Content>
@@ -320,7 +324,7 @@
 								id="thumbnailPrompt"
 								name="thumbnailPrompt"
 								class="min-h-140"
-								value={form?.returndata?.thumbnailPrompt ?? ''}
+								value={returndata?.thumbnailPrompt ?? ''}
 							/>
 						</div>
 					</Tabs.Content>

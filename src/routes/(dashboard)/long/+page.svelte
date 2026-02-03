@@ -26,16 +26,17 @@
 	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
 	import PopcornIcon from '@lucide/svelte/icons/popcorn';
 	import { getContext, onMount, setContext } from 'svelte';
-	let channelId = $state.raw('');
+	let channelId = $state('');
 	function setChannelId(channelIdIn) {
 		channelId = channelIdIn;
 		console.log('setChannelId ' + channelId);
 	}
-	let promise = $state(fetchData(''));
-	async function fetchData(channelIdFetch) {
+
+	let promise = $state(fetchData());
+	async function fetchData() {
 		if (channelId) {
-			console.log('fetchData ' + channelIdFetch);
-			const response = await fetch(`/long/${channelIdFetch}`, {
+			console.log('fetchData ' + channelId);
+			const response = await fetch(`/long/${channelId}`, {
 				method: 'GET',
 				headers: {
 					'content-type': 'application/json'
@@ -48,10 +49,14 @@
 		return [];
 	}
 
+	function refreshLongDataTable() {
+		promise = fetchData();
+	}
+
 	$effect(() => {
 		console.log('effect ' + channelId);
 		setContext('channelId', channelId);
-		promise = fetchData(channelId);
+		promise = fetchData();
 		// setContext('form', form);
 	});
 
@@ -84,7 +89,7 @@
 					<!-- {#each items as item} -->
 					<!-- {item} -->
 					<!-- {/each} -->
-					<DataTable {items} {isAdmin} {form} />
+					<DataTable {items} {isAdmin} {form} {refreshLongDataTable} />
 				</div>
 			</div>
 		</div>

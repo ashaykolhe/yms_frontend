@@ -10,6 +10,6 @@ export const GET: RequestHandler = async ({ params }) => {
 	let longVideos = await Video.find(
 		{ softDelete: false, type: 'long', archived: false, channelId: channelId },
 		columns
-	);
+	).sort({ createdAt: -1 });
 	return json(longVideos);
 };
