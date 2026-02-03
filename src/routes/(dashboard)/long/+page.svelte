@@ -36,7 +36,7 @@
 	async function fetchData() {
 		if (channelId) {
 			console.log('fetchData ' + channelId);
-			const response = await fetch(`/long/${channelId}`, {
+			const response = await fetch(`/long?type=A&channelId=${channelId}`, {
 				method: 'GET',
 				headers: {
 					'content-type': 'application/json'

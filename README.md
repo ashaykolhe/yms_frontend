@@ -93,3 +93,5 @@ notification collection -> you created {title of video}, you updated {title of v
 *if error, remove in few seconds
 
 description in data table - truncate
+
+status and domain should come from DB in datatable add edit view

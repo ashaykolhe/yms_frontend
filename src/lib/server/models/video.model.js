@@ -49,7 +49,7 @@ const VideoSchema = new mongoose.Schema(
 			type: String,
 			default: ''
 		},
-		title: { type: String, default: '', unique: true, required: true },
+		title: { type: String, default: '', required: true },
 		description: { type: String, default: '' },
 		userCreatedBy: { type: String, default: '', required: true },
 		userUpdatedBy: { type: String, default: '', required: true },

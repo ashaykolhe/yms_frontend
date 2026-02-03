@@ -68,5 +68,48 @@ export const actions = {
 			// return { error: true, message: err.message };
 			// return error(400, { message: err.message });
 		}
+	},
+	editLongVideo: async ({ request, locals }) => {
+		let formdata = await request.formData();
+		// console.log('formdata');
+		// console.log(formdata);
+		let data = formBody(formdata);
+		// console.log('data');
+		// console.log(data);
+		// console.log('formbody');
+		// console.log(data);
+		// console.log('data.title' + data.title);
+		if (!data.title) {
+			return fail(400, { returndata: data, error: true, message: 'Title must be present' });
+		}
+		try {
+			// data.userCreatedBy = locals.useremail;
+			data.userUpdatedBy = locals.useremail;
+			if (data?.archived === 'on') {
+				data.archived = true;
+			} else {
+				data.archived = false;
+			}
+
+			if (data?.softDelete === 'on') {
+				data.softDelete = true;
+			} else {
+				data.softDelete = false;
+			}
+
+			let video = await Video.findByIdAndUpdate(data._id, data, {
+				new: true
+			});
+			if (!video) {
+				return fail(400, { returndata: data, error: true, message: 'Video not found.' });
+			}
+			let newVideo = { ...video._doc };
+			newVideo['parentVideoId'] = newVideo._id;
+			delete newVideo._id;
+			VideoVersionHistory.create(newVideo);
+			return { success: true, message: `You updated ${video.title} long video` };
+		} catch (err) {
+			return fail(400, { returndata: data, error: true, message: err.message });
+		}
 	}
 };

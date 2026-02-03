@@ -18,7 +18,7 @@
 	console.log('getContext(channelId) ' + getContext('channelId'));
 	let channelId = $state(getContext('channelId'));
 	let isOpen = $state(false);
-	let { form, refreshLongDataTable } = $props();
+	let { form, refreshLongDataTable, isAdmin } = $props();
 	$inspect(form);
 	let message = $state('');
 	let returndata = $state('');
@@ -70,6 +70,7 @@
 		console.log(e.target.value);
 	}
 
+	// TODO - should come from DB
 	const statuses = [
 		{
 			_id: 1,
@@ -120,17 +121,13 @@
 			title: 'PUBLISHED'
 		}
 	];
-
-	function handleSubmitForm(e) {
-		e.preventDefault();
-	}
 </script>
 
 <Dialog.Root bind:open={isOpen}>
-	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Add New</Dialog.Trigger>
+	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Add</Dialog.Trigger>
 
 	<Dialog.Content class="min-w-400">
-		<form action="?/addNewLongVideo" method="POST" use:enhance onsubmit={handleSubmitForm}>
+		<form action="?/addNewLongVideo" method="POST" use:enhance>
 			<Dialog.Header>
 				<Dialog.Title>Add New</Dialog.Title>
 				<Dialog.Description>Add New Long Video</Dialog.Description>
@@ -152,7 +149,13 @@
 
 					<Tabs.Content value="titledescriptionkeywords">
 						<div class="grid gap-3">
-							<Textarea placeholder="Add title here" id="title" name="title" class="min-h-30" />
+							<Textarea
+								placeholder="Add title here"
+								id="title"
+								name="title"
+								class="min-h-30"
+								value={returndata?.title ?? ''}
+							/>
 						</div>
 						<div class="grid gap-3">
 							<Textarea
@@ -287,37 +290,40 @@
 						</div>
 					</Tabs.Content>
 					<Tabs.Content value="others">
-						<div class="grid gap-3">
-							<Label
-								class="flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950"
-							>
-								<Checkbox
-									id="toggle-2"
-									name="archived"
-									class="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
-								/>
-								<div class="grid gap-1.5 font-normal">
-									<p class="text-sm leading-none font-medium">Archive</p>
-								</div>
-							</Label>
-						</div>
-						<div class="grid gap-3">
-							<Label
-								class="flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950"
-							>
-								<Checkbox
-									id="toggle-2"
-									name="softDelete"
-									class="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
-								/>
-								<div class="grid gap-1.5 font-normal">
-									<p class="text-sm leading-none font-medium">Delete</p>
-									<!-- <p class="text-sm text-muted-foreground">
+						{#if isAdmin}
+							<div class="grid gap-3">
+								<Label
+									class="flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950"
+								>
+									<Checkbox
+										id="toggle-2"
+										name="archived"
+										class="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
+									/>
+									<div class="grid gap-1.5 font-normal">
+										<p class="text-sm leading-none font-medium">Archive</p>
+									</div>
+								</Label>
+							</div>
+							<div class="grid gap-3">
+								<Label
+									class="flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950"
+								>
+									<Checkbox
+										id="toggle-2"
+										name="softDelete"
+										class="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
+									/>
+									<div class="grid gap-1.5 font-normal">
+										<p class="text-sm leading-none font-medium">Delete</p>
+										<!-- <p class="text-sm text-muted-foreground">
 										You can enable or disable notifications at any time.
 									</p> -->
-								</div>
-							</Label>
-						</div>
+									</div>
+								</Label>
+							</div>
+						{/if}
+
 						<div class="grid gap-3">
 							<Textarea
 								placeholder="Add thumbnail prompt here"

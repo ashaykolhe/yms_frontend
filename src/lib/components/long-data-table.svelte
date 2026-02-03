@@ -21,7 +21,7 @@
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
 	import * as Table from '$lib/components/ui/table/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Select from '$lib/components/ui/select/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { Badge } from '$lib/components/ui/badge/index.js';
@@ -42,6 +42,7 @@
 	import CircleCheckFilledIcon from '@tabler/icons-svelte/icons/circle-check-filled';
 	import LoaderIcon from '@tabler/icons-svelte/icons/loader';
 	import DotsVerticalIcon from '@tabler/icons-svelte/icons/dots-vertical';
+	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 	import { toast } from 'svelte-sonner';
 	import DataTableCheckbox from './long-data-table-checkbox.svelte';
 	import DataTableCellViewer from './long-data-table-cell-viewer.svelte';
@@ -52,8 +53,10 @@
 	import { useSortable } from '@dnd-kit-svelte/svelte/sortable';
 	import Edit from '@tabler/icons-svelte/icons/edit';
 	import ArrowUpDownIcon from '@lucide/svelte/icons/arrow-up-down';
-	import LongDataTableAddNew from './long-data-table-add-edit-view.svelte';
-	import LongDataTableAddEditView from './long-data-table-add-edit-view.svelte';
+	import LongDataTableAddNew from './long-data-table-add.svelte';
+	import LongDataTableAdd from './long-data-table-add.svelte';
+	import LongDataTableEdit from './long-data-table-edit.svelte';
+	import LongDataTableView from './long-data-table-view.svelte';
 
 	let { items, isAdmin, form, refreshLongDataTable }: { items: LongSchema[] } = $props();
 	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 });
@@ -267,7 +270,7 @@
 			<!-- <Button variant="outline" size="sm">
 				<span class="hidden lg:inline"><LongDataTableAddNew /> </span>
 			</Button> -->
-			<LongDataTableAddEditView {form} {refreshLongDataTable} />
+			<LongDataTableAdd {form} {refreshLongDataTable} {isAdmin} />
 			{#if isAdmin}
 				<Button variant="outline" size="sm">
 					<span class="hidden lg:inline">Soft Delete All</span>
@@ -448,7 +451,11 @@
 	</Badge>
 {/snippet}
 {#snippet DataTableActions({ id, isAdmin, IsSomePageRowsSelected, IsAllPageRowsSelected })}
-	<DropdownMenu.Root>
+	{#if !IsSomePageRowsSelected && !IsAllPageRowsSelected}
+		<LongDataTableView {id} {isAdmin} />
+		<LongDataTableEdit {form} {refreshLongDataTable} {id} {isAdmin} />
+	{/if}
+	<!-- <DropdownMenu.Root>
 		<DropdownMenu.Trigger class="flex size-8 text-muted-foreground data-[state=open]:bg-muted">
 			{#snippet child({ props })}
 				<Button variant="ghost" size="icon" {...props}>
@@ -460,7 +467,7 @@
 		{#if !IsSomePageRowsSelected && !IsAllPageRowsSelected}
 			<DropdownMenu.Content align="end" class="w-36">
 				<DropdownMenu.Item><button onclick={view(id)}>View</button></DropdownMenu.Item>
-				<DropdownMenu.Item><button onclick={edit(id)}>Edit</button></DropdownMenu.Item>
+				<DropdownMenu.Item><LongDataTableEdit {form} {refreshLongDataTable} {id}/></DropdownMenu.Item>
 				<DropdownMenu.Item><button onclick={clone(id)}>Clone</button></DropdownMenu.Item>
 				<DropdownMenu.Item><button onclick={pin(id)}>Pin</button></DropdownMenu.Item>
 				<DropdownMenu.Item
@@ -478,7 +485,7 @@
 				{/if}
 			</DropdownMenu.Content>
 		{/if}
-	</DropdownMenu.Root>
+	</DropdownMenu.Root> -->
 {/snippet}
 
 {#snippet DraggableRow({ row, index }: { row: Row<LongSchema>; index: number })}
@@ -506,8 +513,15 @@
 {/snippet}
 
 {#snippet DataTableText({ text }: { row: Row<LongSchema> })}
-	<div>
-		{text}
+	<div class="truncate-text">
+		<Tooltip.Provider>
+			<Tooltip.Root>
+				<Tooltip.Trigger class={buttonVariants({ variant: 'ghost' })}>{text}</Tooltip.Trigger>
+				<Tooltip.Content>
+					{text}
+				</Tooltip.Content>
+			</Tooltip.Root>
+		</Tooltip.Provider>
 	</div>
 {/snippet}
 
@@ -527,3 +541,13 @@
 		/>
 	</div>
 {/snippet}
+
+<style>
+	.truncate-text {
+		white-space: nowrap; /* Forces text to a single line */
+		overflow: hidden;
+		text-overflow: ellipsis; /* Appends ellipsis to overflowed text */
+		width: 200px; /* Requires a defined width */
+		display: block;
+	}
+</style>
