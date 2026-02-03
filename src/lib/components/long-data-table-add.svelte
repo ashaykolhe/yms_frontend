@@ -18,7 +18,7 @@
 	console.log('getContext(channelId) ' + getContext('channelId'));
 	let channelId = $state(getContext('channelId'));
 	let isOpen = $state(false);
-	let { form, refreshLongDataTable, isAdmin } = $props();
+	let { form, isAdmin } = $props();
 	$inspect(form);
 	let message = $state('');
 	let returndata = $state('');
@@ -42,7 +42,6 @@
 		message = '';
 		returndata = '';
 		console.log('isOpen ' + isOpen);
-		refreshLongDataTable(channelId);
 	}
 
 	function handleDomainChange(e) {

@@ -64,7 +64,7 @@ export const actions = {
 			VideoVersionHistory.create(newVideo);
 			return { success: true, message: `You created ${video.title} long video` };
 		} catch (err) {
-			return fail(400, { returndata: data, error: true, message: err.message });
+			return fail(500, { returndata: data, error: true, message: err.message });
 			// return { error: true, message: err.message };
 			// return error(400, { message: err.message });
 		}
@@ -109,7 +109,39 @@ export const actions = {
 			VideoVersionHistory.create(newVideo);
 			return { success: true, message: `You updated ${video.title} long video` };
 		} catch (err) {
-			return fail(400, { returndata: data, error: true, message: err.message });
+			return fail(500, { returndata: data, error: true, message: err.message });
+		}
+	},
+	permanentDeleteLongVideo: async ({ request, locals }) => {
+		if (!locals.isAdmin) {
+			fail(400, { error: true, message: 'Unauthorized!' });
+		}
+		let formdata = await request.formData();
+		// console.log('formdata');
+		// console.log(formdata);
+		let data = formBody(formdata);
+		// console.log('data');
+		// console.log(data);
+		// console.log('formbody');
+		// console.log(data);
+		// console.log('data.title' + data.title);
+		if (!data._id) {
+			return fail(400, { error: true, message: 'Id must be present' });
+		}
+		try {
+			const idsArray = data._id.split(',');
+			// const video = await Video.findByIdAndDelete(id);
+			const result = await Video.deleteMany({
+				_id: { $in: idsArray }
+			});
+
+			return {
+				success: true,
+				message:
+					result.deletedCount + `Video${result.deletedCount > 1 ? 's' : ''} deleted permanently`
+			};
+		} catch (error) {
+			return fail(500, { error: true, message: error.message });
 		}
 	}
 };

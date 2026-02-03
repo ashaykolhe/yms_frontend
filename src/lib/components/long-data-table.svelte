@@ -57,8 +57,9 @@
 	import LongDataTableAdd from './long-data-table-add.svelte';
 	import LongDataTableEdit from './long-data-table-edit.svelte';
 	import LongDataTableView from './long-data-table-view.svelte';
+	import { enhance } from '$app/forms';
 
-	let { items, isAdmin, form, refreshLongDataTable }: { items: LongSchema[] } = $props();
+	let { items, isAdmin, form}: { items: LongSchema[] } = $props();
 	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 });
 	let sorting = $state<SortingState>([]);
 	let columnFilters = $state<ColumnFiltersState>([]);
@@ -270,7 +271,7 @@
 			<!-- <Button variant="outline" size="sm">
 				<span class="hidden lg:inline"><LongDataTableAddNew /> </span>
 			</Button> -->
-			<LongDataTableAdd {form} {refreshLongDataTable} {isAdmin} />
+			<LongDataTableAdd {form} {isAdmin} />
 			{#if isAdmin}
 				<Button variant="outline" size="sm">
 					<span class="hidden lg:inline">Soft Delete All</span>
@@ -453,8 +454,13 @@
 {#snippet DataTableActions({ id, isAdmin, IsSomePageRowsSelected, IsAllPageRowsSelected })}
 	{#if !IsSomePageRowsSelected && !IsAllPageRowsSelected}
 		<LongDataTableView {id} {isAdmin} />
-		<LongDataTableEdit {form} {refreshLongDataTable} {id} {isAdmin} />
-		<!-- <Button variant="outline">Delete</Button> -->
+		<LongDataTableEdit {form} {id} {isAdmin} />
+		{#if isAdmin}
+			<form action="?/permanentDeleteLongVideo" method="POST" use:enhance>
+				<input type="hidden" name="_id" value={id} />
+				<Button variant="outline" type="submit">PD</Button>
+			</form>
+		{/if}
 	{/if}
 	<!-- <DropdownMenu.Root>
 		<DropdownMenu.Trigger class="flex size-8 text-muted-foreground data-[state=open]:bg-muted">

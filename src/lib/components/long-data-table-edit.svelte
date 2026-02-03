@@ -18,7 +18,7 @@
 	console.log('getContext(channelId) ' + getContext('channelId'));
 	let channelId = $state(getContext('channelId'));
 	let isOpen = $state(false);
-	let { form, refreshLongDataTable, id, isAdmin } = $props();
+	let { form, id, isAdmin } = $props();
 	$inspect(form);
 	let message = $state('');
 	let returndata = $state('');
@@ -42,7 +42,6 @@
 		message = '';
 		returndata = '';
 		console.log('isOpen ' + isOpen);
-		refreshLongDataTable(channelId);
 	}
 
 	// <!-- TODO - DOMAIN should come from MONGO  -->
@@ -129,7 +128,7 @@
 </script>
 
 <Dialog.Root bind:open={isOpen}>
-	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Edit</Dialog.Trigger>
+	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>E</Dialog.Trigger>
 
 	<Dialog.Content class="min-w-400">
 		<form action="?/editLongVideo" method="POST" use:enhance>

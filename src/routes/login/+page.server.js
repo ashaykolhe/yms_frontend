@@ -45,7 +45,7 @@ export const actions = {
 					);
 					cookies.set('auth-token', token, cookie_options);
 				} catch (err) {
-					return error(400, { message: err.message });
+					return error(500, { message: err.message });
 				}
 				throw redirect(301, '/long');
 			}

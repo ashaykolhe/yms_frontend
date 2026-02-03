@@ -56,11 +56,14 @@
 	$effect(() => {
 		console.log('effect ' + channelId);
 		setContext('channelId', channelId);
-		promise = fetchData();
+		refreshLongDataTable();
 		// setContext('form', form);
 	});
 
 	$effect(() => {
+		if (form?.success) {
+			refreshLongDataTable();
+		}
 		message = form?.message;
 		setTimeout(() => {
 			message = '';
@@ -89,7 +92,7 @@
 				<!-- {#each items as item} -->
 				<!-- {item} -->
 				<!-- {/each} -->
-				<DataTable {items} {isAdmin} {form} {refreshLongDataTable} />
+				<DataTable {items} {isAdmin} {form} />
 			</div>
 		</div>
 	</div>

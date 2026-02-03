@@ -69,7 +69,7 @@ user - email cannot be changed
 
 
 
-view button -> click not working everytime -> check if addeditview commponent works with every click and id can be sent to it as prop
+*view button -> click not working everytime -> check if addeditview commponent works with every click and id can be sent to it as prop
 
 *show message success and close dialog on save after 2 seconds
 
@@ -95,3 +95,5 @@ notification collection -> you created {title of video}, you updated {title of v
 description in data table - truncate
 
 status and domain should come from DB in datatable add edit view
+
+color coded status - store color info in db

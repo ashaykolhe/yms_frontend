@@ -109,7 +109,7 @@
 </script>
 
 <Dialog.Root bind:open={isOpen}>
-	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>View</Dialog.Trigger>
+	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>V</Dialog.Trigger>
 
 	<Dialog.Content class="min-w-400">
 		<Dialog.Header>
