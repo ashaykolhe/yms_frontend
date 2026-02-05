@@ -45,12 +45,12 @@
 		console.log('isOpen ' + isOpen);
 	}
 
-	let domains;
-	let statuses;
+	let domains=$state('');
+	let statuses=$state('');
 	// <!-- TODO - DOMAIN should come from MONGO  -->
 	async function fetchDomainStatus() {
 		if (channelId) {
-			console.log('fetchData ' + channelId);
+			console.log('status fetchData ' + channelId);
 			let response = await fetch(`/status?type=A&channelId=${channelId}`, {
 				method: 'GET',
 				headers: {
@@ -59,8 +59,9 @@
 			});
 
 			statuses = await response.json();
+			console.log('status fetchData ' + statuses);
 
-			console.log('fetchData ' + channelId);
+			console.log('domain fetchData ' + channelId);
 			response = await fetch(`/domain?type=A&channelId=${channelId}`, {
 				method: 'GET',
 				headers: {
@@ -69,6 +70,7 @@
 			});
 
 			domains = await response.json();
+			console.log('domain fetchData ' + domains);
 		}
 
 		return [];
