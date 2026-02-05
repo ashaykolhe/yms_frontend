@@ -61,7 +61,6 @@
 			statuses = await response.json();
 			console.log('status fetchData ' + statuses);
 
-			console.log('domain fetchData ' + channelId);
 			response = await fetch(`/domain?type=A&channelId=${channelId}`, {
 				method: 'GET',
 				headers: {
@@ -70,13 +69,15 @@
 			});
 
 			domains = await response.json();
-			console.log('domain fetchData ' + domains);
+			console.log('domain fetchData' + domains);
 		}
 
 		// return [];
 	}
 	$effect(() => {
 		fetchDomainStatus();
+		console.log('domain add channelId ' + channelId);
+		// console.log('domain fetchData domains' + domains);
 	});
 </script>
 
