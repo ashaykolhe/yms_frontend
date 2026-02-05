@@ -56,7 +56,8 @@ const VideoSchema = new mongoose.Schema(
 		backgroundMusicPrompt: { type: String, default: '' },
 		backgroundMusic: { type: String, default: '' },
 		thumbnailPrompt: { type: String, default: '' },
-		channelId: { type: String, required: true }
+		channelId: { type: String, required: true },
+		audioPrompt: { type: String, default: '' }
 	},
 	{
 		timestamps: true

@@ -97,6 +97,7 @@
 							>Title, Description & Keywords</Tabs.Trigger
 						>
 						<Tabs.Trigger value="backgroundVisuals">Background Visuals</Tabs.Trigger>
+						<Tabs.Trigger value="audio">Audio Prompt</Tabs.Trigger>
 						<Tabs.Trigger value="video">Video</Tabs.Trigger>
 						<Tabs.Trigger value="speechToText">Speech to Text</Tabs.Trigger>
 						<Tabs.Trigger value="metadata"
@@ -156,6 +157,17 @@
 						</div>
 						<input type="hidden" name="channelId" bind:value={channelId} />
 						<input type="hidden" name="type" value="long" />
+					</Tabs.Content>
+					<Tabs.Content value="audio">
+						<div class="grid gap-3">
+							<Textarea
+								placeholder="Add audio prompt here"
+								id="audioPrompt"
+								name="audioPrompt"
+								class="min-h-30"
+								value={returndata?.audio ?? ''}
+							/>
+						</div>
 					</Tabs.Content>
 					<Tabs.Content value="backgroundVisuals">
 						<div class="grid gap-3">
