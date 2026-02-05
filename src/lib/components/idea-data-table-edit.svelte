@@ -14,7 +14,7 @@
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import Checkbox from './ui/checkbox/checkbox.svelte';
-	let bindtitle = $state('titledescription');
+	let bindtitle = $state('titleidea');
 	console.log('getContext(channelId) ' + getContext('channelId'));
 	let channelId = $state(getContext('channelId'));
 	let isOpen = $state(false);
@@ -45,7 +45,7 @@
 	}
 
 	async function fetchData() {
-		const response = await fetch(`/domain?type=E&id=${id}`, {
+		const response = await fetch(`/idea?type=E&id=${id}`, {
 			method: 'GET',
 			headers: {
 				'content-type': 'application/json'
@@ -64,20 +64,20 @@
 	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>E</Dialog.Trigger>
 
 	<Dialog.Content class="min-w-400">
-		<form action="?/editDomain" method="POST" use:enhance>
+		<form action="?/editIdea" method="POST" use:enhance>
 			<Dialog.Header>
 				<Dialog.Title>Edit</Dialog.Title>
-				<Dialog.Description>Edit Domain</Dialog.Description>
+				<Dialog.Description>Edit Idea</Dialog.Description>
 			</Dialog.Header>
 
 			<div class="-mb-4 flex min-h-180 flex-col gap-6">
 				<Tabs.Root bind:value={bindtitle}>
 					<Tabs.List>
-						<Tabs.Trigger value="titledescription">Title, Description</Tabs.Trigger>
+						<Tabs.Trigger value="titleidea">Title, Idea</Tabs.Trigger>
 						<Tabs.Trigger value="others">Others</Tabs.Trigger>
 					</Tabs.List>
 
-					<Tabs.Content value="titledescription">
+					<Tabs.Content value="titleidea">
 						<div class="grid gap-3">
 							<Textarea
 								placeholder="Add title here"
@@ -89,11 +89,11 @@
 						</div>
 						<div class="grid gap-3">
 							<Textarea
-								placeholder="Add description here"
-								id="description"
-								name="description"
+								placeholder="Add idea here"
+								id="idea"
+								name="idea"
 								class="min-h-130"
-								value={returndata?.description ?? ''}
+								value={returndata?.idea ?? ''}
 							/>
 						</div>
 						<input type="hidden" name="_id" bind:value={id} />

@@ -27,7 +27,7 @@
 	}
 
 	async function fetchData() {
-		const response = await fetch(`/status?type=E&id=${id}`, {
+		const response = await fetch(`/idea?type=E&id=${id}`, {
 			method: 'GET',
 			headers: {
 				'content-type': 'application/json'
@@ -48,7 +48,7 @@
 	<Dialog.Content class="min-w-400">
 		<Dialog.Header>
 			<Dialog.Title>View</Dialog.Title>
-			<Dialog.Description>View Status</Dialog.Description>
+			<Dialog.Description>View Idea</Dialog.Description>
 		</Dialog.Header>
 
 		<div class="-mb-4 flex min-h-180 flex-col gap-6">
@@ -71,11 +71,11 @@
 					</div>
 					<div class="grid gap-3">
 						<Textarea
-							placeholder="Add description here"
-							id="description"
-							name="description"
+							placeholder="Add idea here"
+							id="idea"
+							name="idea"
 							class="min-h-80"
-							value={returndata?.description ?? ''}
+							value={returndata?.idea ?? ''}
 							disabled
 						/>
 					</div>

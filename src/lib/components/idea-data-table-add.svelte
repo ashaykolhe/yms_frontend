@@ -14,11 +14,11 @@
 	import { enhance } from '$app/forms';
 	import { getContext } from 'svelte';
 	import Checkbox from './ui/checkbox/checkbox.svelte';
-	let bindtitle = $state('titledescription');
+	let bindtitle = $state('titleidea');
 	console.log('getContext(channelId) ' + getContext('channelId'));
 	let channelId = $state(getContext('channelId'));
 	let isOpen = $state(false);
-	let { form, id, isAdmin } = $props();
+	let { form, isAdmin } = $props();
 	$inspect(form);
 	let message = $state('');
 	let returndata = $state('');
@@ -43,41 +43,28 @@
 		returndata = '';
 		console.log('isOpen ' + isOpen);
 	}
-
-	async function fetchData() {
-		const response = await fetch(`/domain?type=E&id=${id}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
-			}
-		});
-
-		returndata = await response.json();
-	}
-
-	$effect(() => {
-		fetchData();
-	});
 </script>
 
 <Dialog.Root bind:open={isOpen}>
-	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>E</Dialog.Trigger>
+	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })} disabled={!channelId}
+		>Add</Dialog.Trigger
+	>
 
 	<Dialog.Content class="min-w-400">
-		<form action="?/editDomain" method="POST" use:enhance>
+		<form action="?/addNewIdea" method="POST" use:enhance>
 			<Dialog.Header>
-				<Dialog.Title>Edit</Dialog.Title>
-				<Dialog.Description>Edit Domain</Dialog.Description>
+				<Dialog.Title>Add New</Dialog.Title>
+				<Dialog.Description>Add New Idea</Dialog.Description>
 			</Dialog.Header>
 
 			<div class="-mb-4 flex min-h-180 flex-col gap-6">
 				<Tabs.Root bind:value={bindtitle}>
 					<Tabs.List>
-						<Tabs.Trigger value="titledescription">Title, Description</Tabs.Trigger>
+						<Tabs.Trigger value="titleidea">Title, Idea</Tabs.Trigger>
 						<Tabs.Trigger value="others">Others</Tabs.Trigger>
 					</Tabs.List>
 
-					<Tabs.Content value="titledescription">
+					<Tabs.Content value="titleidea">
 						<div class="grid gap-3">
 							<Textarea
 								placeholder="Add title here"
@@ -90,13 +77,13 @@
 						<div class="grid gap-3">
 							<Textarea
 								placeholder="Add description here"
-								id="description"
-								name="description"
+								id="idea"
+								name="idea"
 								class="min-h-130"
-								value={returndata?.description ?? ''}
+								value={returndata?.idea ?? ''}
 							/>
 						</div>
-						<input type="hidden" name="_id" bind:value={id} />
+						<input type="hidden" name="channelId" bind:value={channelId} />
 					</Tabs.Content>
 					<Tabs.Content value="others">
 						{#if isAdmin}
@@ -105,7 +92,6 @@
 									class="flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950"
 								>
 									<Checkbox
-										checked={returndata?.archived ?? false}
 										id="toggle-2"
 										name="archived"
 										class="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
@@ -120,7 +106,6 @@
 									class="flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950"
 								>
 									<Checkbox
-										checked={returndata?.softDelete ?? false}
 										id="toggle-2"
 										name="softDelete"
 										class="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
