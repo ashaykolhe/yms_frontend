@@ -44,82 +44,38 @@
 		console.log('isOpen ' + isOpen);
 	}
 
-	function handleDomainChange(e) {
-		console.log('handleDomainChange ' + e.target.value);
-		// callback(e.target.value);
-	}
-
+	let domains;
+	let statuses;
 	// <!-- TODO - DOMAIN should come from MONGO  -->
-	const domains = [
-		{
-			_id: 1,
-			title: 'PHILOSOPHY'
-		},
-		{
-			_id: 2,
-			title: 'SCIENCE'
-		},
-		{
-			_id: 3,
-			title: 'MYTHOLOGY'
-		}
-	];
+	async function fetchDomainStatus() {
+		if (channelId) {
+			console.log('fetchData ' + channelId);
+			let response = await fetch(`/status?type=A&channelId=${channelId}`, {
+				method: 'GET',
+				headers: {
+					'content-type': 'application/json'
+				}
+			});
 
-	function handleStatusChange(e) {
-		console.log(e.target.value);
+			statuses = await response.json();
+
+			console.log('fetchData ' + channelId);
+			response = await fetch(`/domain?type=A&channelId=${channelId}`, {
+				method: 'GET',
+				headers: {
+					'content-type': 'application/json'
+				}
+			});
+
+			domains = await response.json();
+		}
+
+		return [];
 	}
 
-	// TODO - should come from DB
-	const statuses = [
-		{
-			_id: 1,
-			title: 'NEXT'
-		},
-		{
-			_id: 2,
-			title: 'AUDIO'
-		},
-		{
-			_id: 3,
-			title: 'SRT'
-		},
-		{
-			_id: 4,
-			title: 'BACKGROUND VISUALS'
-		},
-		{
-			_id: 5,
-			title: 'DOWNLOAD VIDEO'
-		},
-		{
-			_id: 6,
-			title: 'PREMIERE PRO'
-		},
-		{
-			_id: 7,
-			title: 'PREMIERE PRO SHORT'
-		},
-		{
-			_id: 8,
-			title: 'READY'
-		},
-		{
-			_id: 9,
-			title: 'UPLOADING'
-		},
-		{
-			_id: 10,
-			title: 'METADATA PENDING'
-		},
-		{
-			_id: 11,
-			title: 'UPLOADED'
-		},
-		{
-			_id: 12,
-			title: 'PUBLISHED'
-		}
-	];
+	$effect(() => {
+		fetchDomainStatus()
+	})
 </script>
 
 <Dialog.Root bind:open={isOpen}>
@@ -179,7 +135,7 @@
 							/>
 						</div>
 						<div class="grid gap-3">
-							<NativeSelect.Root class="w-390" name="domain" onchange={handleDomainChange}>
+							<NativeSelect.Root class="w-390" name="domain">
 								<NativeSelect.Option value="">Select domain</NativeSelect.Option>
 								{#each domains as domain (domain._id)}
 									<NativeSelect.Option value={domain.title}>
@@ -189,7 +145,7 @@
 							</NativeSelect.Root>
 						</div>
 						<div class="grid gap-3">
-							<NativeSelect.Root class="w-390" name="status" onchange={handleStatusChange}>
+							<NativeSelect.Root class="w-390" name="status">
 								<NativeSelect.Option value="">Select status</NativeSelect.Option>
 								{#each statuses as status (status._id)}
 									<NativeSelect.Option value={status.title}>

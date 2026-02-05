@@ -25,73 +25,34 @@
 		returndata = '';
 	}
 
+	let domains;
+	let statuses;
 	// <!-- TODO - DOMAIN should come from MONGO  -->
-	const domains = [
-		{
-			_id: 1,
-			title: 'PHILOSOPHY'
-		},
-		{
-			_id: 2,
-			title: 'SCIENCE'
-		},
-		{
-			_id: 3,
-			title: 'MYTHOLOGY'
-		}
-	];
+	async function fetchDomainStatus() {
+		if (channelId) {
+			console.log('fetchData ' + channelId);
+			let response = await fetch(`/status?type=A&channelId=${channelId}`, {
+				method: 'GET',
+				headers: {
+					'content-type': 'application/json'
+				}
+			});
 
-	// TODO - should come from DB
-	const statuses = [
-		{
-			_id: 1,
-			title: 'NEXT'
-		},
-		{
-			_id: 2,
-			title: 'AUDIO'
-		},
-		{
-			_id: 3,
-			title: 'SRT'
-		},
-		{
-			_id: 4,
-			title: 'BACKGROUND VISUALS'
-		},
-		{
-			_id: 5,
-			title: 'DOWNLOAD VIDEO'
-		},
-		{
-			_id: 6,
-			title: 'PREMIERE PRO'
-		},
-		{
-			_id: 7,
-			title: 'PREMIERE PRO SHORT'
-		},
-		{
-			_id: 8,
-			title: 'READY'
-		},
-		{
-			_id: 9,
-			title: 'UPLOADING'
-		},
-		{
-			_id: 10,
-			title: 'METADATA PENDING'
-		},
-		{
-			_id: 11,
-			title: 'UPLOADED'
-		},
-		{
-			_id: 12,
-			title: 'PUBLISHED'
+			statuses = await response.json();
+
+			console.log('fetchData ' + channelId);
+			response = await fetch(`/domain?type=A&channelId=${channelId}`, {
+				method: 'GET',
+				headers: {
+					'content-type': 'application/json'
+				}
+			});
+
+			domains = await response.json();
 		}
-	];
+
+		return [];
+	}
 	async function fetchData() {
 		const response = await fetch(`/short?type=E&id=${id}`, {
 			method: 'GET',
@@ -105,6 +66,7 @@
 
 	$effect(() => {
 		fetchData();
+		fetchDomainStatus();
 	});
 </script>
 
@@ -120,7 +82,8 @@
 		<div class="-mb-4 flex min-h-180 flex-col gap-6">
 			<Tabs.Root bind:value={bindtitle}>
 				<Tabs.List>
-					<Tabs.Trigger value="titledescriptionkeywords">Title, Description & Keywords</Tabs.Trigger>
+					<Tabs.Trigger value="titledescriptionkeywords">Title, Description & Keywords</Tabs.Trigger
+					>
 					<Tabs.Trigger value="backgroundVisuals">Background Visuals</Tabs.Trigger>
 					<Tabs.Trigger value="video">Video</Tabs.Trigger>
 					<Tabs.Trigger value="speechToText">Speech to Text</Tabs.Trigger>

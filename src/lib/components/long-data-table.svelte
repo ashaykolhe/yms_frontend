@@ -465,7 +465,7 @@
 					</Dialog.Header>
 					<Dialog.Footer>
 						<Dialog.Close class={buttonVariants({ variant: 'secondary' })}>Cancel</Dialog.Close>
-						<form action="?/permanentDeleteDomain" method="POST" use:enhance>
+						<form action="?/permanentDeleteLongVideo" method="POST" use:enhance>
 							<input type="hidden" name="_id" value={id} />
 							<Button variant="outline" type="submit">PD</Button>
 						</form>
