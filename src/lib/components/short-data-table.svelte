@@ -14,7 +14,7 @@
 		type SortingState,
 		type VisibilityState
 	} from '@tanstack/table-core';
-	// import type { LongSchema } from './long-schemas.js';
+	// import type { ShortSchema } from './short-schemas.js';
 	import type { Attachment } from 'svelte/attachments';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { RestrictToVerticalAxis } from '@dnd-kit/abstract/modifiers';
@@ -45,29 +45,25 @@
 	import DotsVerticalIcon from '@tabler/icons-svelte/icons/dots-vertical';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 	import { toast } from 'svelte-sonner';
-	import DataTableCheckbox from './long-data-table-checkbox.svelte';
-	import DataTableCellViewer from './long-data-table-cell-viewer.svelte';
-	import { createRawSnippet } from 'svelte';
-	import DataTableReviewer from './long-data-table-reviewer.svelte';
 	import { DragDropProvider } from '@dnd-kit-svelte/svelte';
 	import { move } from '@dnd-kit/helpers';
 	import { useSortable } from '@dnd-kit-svelte/svelte/sortable';
 	import Edit from '@tabler/icons-svelte/icons/edit';
 	import ArrowUpDownIcon from '@lucide/svelte/icons/arrow-up-down';
-	import LongDataTableAddNew from './long-data-table-add.svelte';
-	import LongDataTableAdd from './long-data-table-add.svelte';
-	import LongDataTableEdit from './long-data-table-edit.svelte';
-	import LongDataTableView from './long-data-table-view.svelte';
+	import ShortDataTableAdd from './short-data-table-add.svelte';
+	import ShortDataTableEdit from './short-data-table-edit.svelte';
+	import ShortDataTableView from './short-data-table-view.svelte';
 	import { enhance } from '$app/forms';
+	import DataTableCheckbox from './data-table-checkbox.svelte';
 
-	let { items, isAdmin, form }: { items: LongSchema[] } = $props();
+	let { items, isAdmin, form }: { items: ShortSchema[] } = $props();
 	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 });
 	let sorting = $state<SortingState>([]);
 	let columnFilters = $state<ColumnFiltersState>([]);
 	let rowSelection = $state<RowSelectionState>({});
 	let columnVisibility = $state<VisibilityState>({});
 
-	export const columns: ColumnDef<LongSchema>[] = [
+	export const columns: ColumnDef<ShortSchema>[] = [
 		// {
 		// 	id: 'drag',
 		// 	header: () => null,
@@ -145,9 +141,9 @@
 		{
 			accessorKey: 'domain',
 			header: ({ column }) =>
-				// renderComponent(LongDataTableHeaderSortable, {
+				// renderComponent(ShortDataTableHeaderSortable, {
 				// 	onclick: column.getToggleSortingHandler(),
-				// 	text: 'Domain'
+				// 	text: 'Short'
 				// }),
 				renderSnippet(DataTableHeader, {
 					onclick: column.getToggleSortingHandler(),
@@ -270,9 +266,9 @@
 	<div class="flex items-center justify-between px-4 lg:px-6">
 		<div class="flex items-center gap-2">
 			<!-- <Button variant="outline" size="sm">
-				<span class="hidden lg:inline"><LongDataTableAddNew /> </span>
+				<span class="hidden lg:inline"><ShortDataTableAddNew /> </span>
 			</Button> -->
-			<LongDataTableAdd {form} {isAdmin} />
+			<ShortDataTableAdd {form} {isAdmin} />
 			{#if isAdmin}
 				<Button variant="outline" size="sm">
 					<span class="hidden lg:inline">Soft Delete All</span>
@@ -422,7 +418,7 @@
 	</Tabs.Content>
 </Tabs.Root>
 
-{#snippet DataTableLimit({ row }: { row: Row<LongSchema> })}
+{#snippet DataTableLimit({ row }: { row: Row<ShortSchema> })}
 	<form
 		onsubmit={(e) => {
 			e.preventDefault();
@@ -442,7 +438,7 @@
 	</form>
 {/snippet}
 
-{#snippet DataTableStatus({ row }: { row: Row<LongSchema> })}
+{#snippet DataTableStatus({ row }: { row: Row<ShortSchema> })}
 	<Badge variant="outline" class="px-1.5 text-muted-foreground">
 		{#if row.original.status === 'Done'}
 			<CircleCheckFilledIcon class="fill-green-500 dark:fill-green-400" />
@@ -454,8 +450,8 @@
 {/snippet}
 {#snippet DataTableActions({ id, isAdmin, IsSomePageRowsSelected, IsAllPageRowsSelected })}
 	{#if !IsSomePageRowsSelected && !IsAllPageRowsSelected}
-		<LongDataTableView {id} {isAdmin} />
-		<LongDataTableEdit {form} {id} {isAdmin} />
+		<ShortDataTableView {id} {isAdmin} />
+		<ShortDataTableEdit {form} {id} {isAdmin} />
 		{#if isAdmin}
 			<Dialog.Root>
 				<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>PD</Dialog.Trigger>
@@ -465,7 +461,7 @@
 					</Dialog.Header>
 					<Dialog.Footer>
 						<Dialog.Close class={buttonVariants({ variant: 'secondary' })}>Cancel</Dialog.Close>
-						<form action="?/permanentDeleteDomain" method="POST" use:enhance>
+						<form action="?/permanentDeleteShortVideo" method="POST" use:enhance>
 							<input type="hidden" name="_id" value={id} />
 							<Button variant="outline" type="submit">PD</Button>
 						</form>
@@ -486,7 +482,7 @@
 		{#if !IsSomePageRowsSelected && !IsAllPageRowsSelected}
 			<DropdownMenu.Content align="end" class="w-36">
 				<DropdownMenu.Item><button onclick={view(id)}>View</button></DropdownMenu.Item>
-				<DropdownMenu.Item><LongDataTableEdit {form} {refreshLongDataTable} {id}/></DropdownMenu.Item>
+				<DropdownMenu.Item><ShortDataTableEdit {form} {refreshShortDataTable} {id}/></DropdownMenu.Item>
 				<DropdownMenu.Item><button onclick={clone(id)}>Clone</button></DropdownMenu.Item>
 				<DropdownMenu.Item><button onclick={pin(id)}>Pin</button></DropdownMenu.Item>
 				<DropdownMenu.Item
@@ -507,7 +503,7 @@
 	</DropdownMenu.Root> -->
 {/snippet}
 
-{#snippet DraggableRow({ row, index }: { row: Row<LongSchema>; index: number })}
+{#snippet DraggableRow({ row, index }: { row: Row<ShortSchema>; index: number })}
 	{@const { ref, isDragging, handleRef } = useSortable({
 		id: row.original.id,
 		index: () => index
@@ -531,7 +527,7 @@
 	</Table.Row>
 {/snippet}
 
-{#snippet DataTableText({ text }: { row: Row<LongSchema> })}
+{#snippet DataTableText({ text }: { row: Row<ShortSchema> })}
 	<div class="truncate-text">
 		<Tooltip.Provider>
 			<Tooltip.Root>
@@ -544,7 +540,7 @@
 	</div>
 {/snippet}
 
-{#snippet DataTableHeader({ text, onclick, filterOn }: { row: Row<LongSchema> })}
+{#snippet DataTableHeader({ text, onclick, filterOn }: { row: Row<ShortSchema> })}
 	<div>
 		<Button {onclick} variant="ghost" class="cursor-pointer">
 			{text}

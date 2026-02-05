@@ -20,7 +20,7 @@
 	import SiteHeader from '$lib/components/site-header.svelte';
 	import SectionCards from '$lib/components/section-cards.svelte';
 	import ChartAreaInteractive from '$lib/components/chart-area-interactive.svelte';
-	import DataTable from '$lib/components/long-data-table.svelte';
+	import LongDataTable from '$lib/components/long-data-table.svelte';
 	import * as Alert from '$lib/components/ui/alert/index.js';
 	import CheckCircle2Icon from '@lucide/svelte/icons/check-circle-2';
 	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
@@ -92,7 +92,7 @@
 				<!-- {#each items as item} -->
 				<!-- {item} -->
 				<!-- {/each} -->
-				<DataTable {items} {isAdmin} {form} />
+				<LongDataTable {items} {isAdmin} {form} />
 			</div>
 		</div>
 	</div>

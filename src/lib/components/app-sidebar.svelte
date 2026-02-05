@@ -46,7 +46,7 @@
 				icon: DashboardIcon
 			},
 			{
-				url: '/videostatus',
+				url: '/status',
 				title: 'Video Status',
 				icon: DashboardIcon
 			},

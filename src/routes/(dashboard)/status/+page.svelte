@@ -1,7 +1,7 @@
 <script lang="ts">
 	let { data, form } = $props();
 	let isAdmin = data.isAdmin;
-	// let items = data.shortVideos;
+	// let items = data.longVideos;
 	let username = data.username;
 	let useremail = data.useremail;
 	// export let { isAdmin, items, username, useremail } = $props();
@@ -19,12 +19,13 @@
 	import SiteHeader from '$lib/components/site-header.svelte';
 	import SectionCards from '$lib/components/section-cards.svelte';
 	import ChartAreaInteractive from '$lib/components/chart-area-interactive.svelte';
-	import ShortDataTable from '$lib/components/short-data-table.svelte';
+
 	import * as Alert from '$lib/components/ui/alert/index.js';
 	import CheckCircle2Icon from '@lucide/svelte/icons/check-circle-2';
 	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
 	import PopcornIcon from '@lucide/svelte/icons/popcorn';
 	import { getContext, onMount, setContext } from 'svelte';
+	import StatusDataTable from '$lib/components/status-data-table.svelte';
 	let channelId = $state('');
 	function setChannelId(channelIdIn) {
 		channelId = channelIdIn;
@@ -35,7 +36,7 @@
 	async function fetchData() {
 		if (channelId) {
 			console.log('fetchData ' + channelId);
-			const response = await fetch(`/short?type=A&channelId=${channelId}`, {
+			const response = await fetch(`/status?type=A&channelId=${channelId}`, {
 				method: 'GET',
 				headers: {
 					'content-type': 'application/json'
@@ -48,20 +49,20 @@
 		return [];
 	}
 
-	function refreshShortDataTable() {
+	function refreshDataTable() {
 		promise = fetchData();
 	}
 
 	$effect(() => {
 		console.log('effect ' + channelId);
 		setContext('channelId', channelId);
-		refreshShortDataTable();
+		refreshDataTable();
 		// setContext('form', form);
 	});
 
 	$effect(() => {
 		if (form?.success) {
-			refreshShortDataTable();
+			refreshDataTable();
 		}
 		message = form?.message;
 		setTimeout(() => {
@@ -70,7 +71,7 @@
 	});
 </script>
 
-<SiteHeader page="Short" callback={setChannelId} />
+<SiteHeader page="Status" callback={setChannelId} />
 {#if form?.success && message?.length > 0}
 	<div class="grid w-full max-w-xl items-start gap-4">
 		<Alert.Root variant="destructive">
@@ -91,7 +92,7 @@
 				<!-- {#each items as item} -->
 				<!-- {item} -->
 				<!-- {/each} -->
-				<ShortDataTable {items} {isAdmin} {form} />
+				<StatusDataTable {items} {isAdmin} {form} />
 			</div>
 		</div>
 	</div>

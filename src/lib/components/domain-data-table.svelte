@@ -14,7 +14,7 @@
 		type SortingState,
 		type VisibilityState
 	} from '@tanstack/table-core';
-	// import type { LongSchema } from './long-schemas.js';
+	// import type { DomainSchema } from './long-schemas.js';
 	import type { Attachment } from 'svelte/attachments';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { RestrictToVerticalAxis } from '@dnd-kit/abstract/modifiers';
@@ -54,20 +54,20 @@
 	import { useSortable } from '@dnd-kit-svelte/svelte/sortable';
 	import Edit from '@tabler/icons-svelte/icons/edit';
 	import ArrowUpDownIcon from '@lucide/svelte/icons/arrow-up-down';
-	import LongDataTableAddNew from './long-data-table-add.svelte';
-	import LongDataTableAdd from './long-data-table-add.svelte';
-	import LongDataTableEdit from './long-data-table-edit.svelte';
-	import LongDataTableView from './long-data-table-view.svelte';
 	import { enhance } from '$app/forms';
+	import type { DomainSchema } from './domain-schemas';
+	import DomainDataTableView from './domain-data-table-view.svelte';
+	import DomainDataTableEdit from './domain-data-table-edit.svelte';
+	import DomainDataTableAdd from './domain-data-table-add.svelte';
 
-	let { items, isAdmin, form }: { items: LongSchema[] } = $props();
+	let { items, isAdmin, form }: { items: DomainSchema[] } = $props();
 	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 });
 	let sorting = $state<SortingState>([]);
 	let columnFilters = $state<ColumnFiltersState>([]);
 	let rowSelection = $state<RowSelectionState>({});
 	let columnVisibility = $state<VisibilityState>({});
 
-	export const columns: ColumnDef<LongSchema>[] = [
+	export const columns: ColumnDef<DomainSchema>[] = [
 		// {
 		// 	id: 'drag',
 		// 	header: () => null,
@@ -113,16 +113,6 @@
 			cell: ({ row }) => renderSnippet(DataTableText, { text: row.original.description })
 		},
 		{
-			accessorKey: 'status',
-			header: ({ column }) =>
-				renderSnippet(DataTableHeader, {
-					onclick: column.getToggleSortingHandler(),
-					text: 'Status',
-					filterOn: 'status'
-				}),
-			cell: ({ row }) => renderSnippet(DataTableText, { text: row.original.status })
-		},
-		{
 			accessorKey: 'userCreatedBy',
 			header: ({ column }) =>
 				renderSnippet(DataTableHeader, {
@@ -142,25 +132,6 @@
 				}),
 			cell: ({ row }) => renderSnippet(DataTableText, { text: row.original.createdAt })
 		},
-		{
-			accessorKey: 'domain',
-			header: ({ column }) =>
-				// renderComponent(LongDataTableHeaderSortable, {
-				// 	onclick: column.getToggleSortingHandler(),
-				// 	text: 'Domain'
-				// }),
-				renderSnippet(DataTableHeader, {
-					onclick: column.getToggleSortingHandler(),
-					text: 'Domain',
-					filterOn: 'domain'
-				}),
-			cell: ({ row }) => renderSnippet(DataTableText, { text: row.original.domain })
-		},
-		// {
-		// 	accessorKey: 'domain',
-		// 	header: 'Domain',
-		// 	cell: ({ row }) => renderComponent(DataTableReviewer, { row })
-		// },
 		{
 			id: 'actions',
 			cell: ({ row, table }) =>
@@ -270,9 +241,9 @@
 	<div class="flex items-center justify-between px-4 lg:px-6">
 		<div class="flex items-center gap-2">
 			<!-- <Button variant="outline" size="sm">
-				<span class="hidden lg:inline"><LongDataTableAddNew /> </span>
+				<span class="hidden lg:inline"><DomainDataTableAddNew /> </span>
 			</Button> -->
-			<LongDataTableAdd {form} {isAdmin} />
+			<DomainDataTableAdd {form} {isAdmin} />
 			{#if isAdmin}
 				<Button variant="outline" size="sm">
 					<span class="hidden lg:inline">Soft Delete All</span>
@@ -421,41 +392,10 @@
 		</div>
 	</Tabs.Content>
 </Tabs.Root>
-
-{#snippet DataTableLimit({ row }: { row: Row<LongSchema> })}
-	<form
-		onsubmit={(e) => {
-			e.preventDefault();
-			toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-				loading: `Saving ${row.original.header}`,
-				success: 'Done',
-				error: 'Error'
-			});
-		}}
-	>
-		<Label for="{row.original.id}-limit" class="sr-only">Limit</Label>
-		<Input
-			class="h-8 w-16 border-transparent bg-transparent text-end shadow-none hover:bg-input/30 focus-visible:border focus-visible:bg-background dark:bg-transparent dark:hover:bg-input/30 dark:focus-visible:bg-input/30"
-			value={row.original.limit}
-			id="{row.original.id}-limit"
-		/>
-	</form>
-{/snippet}
-
-{#snippet DataTableStatus({ row }: { row: Row<LongSchema> })}
-	<Badge variant="outline" class="px-1.5 text-muted-foreground">
-		{#if row.original.status === 'Done'}
-			<CircleCheckFilledIcon class="fill-green-500 dark:fill-green-400" />
-		{:else}
-			<LoaderIcon />
-		{/if}
-		{row.original.status}
-	</Badge>
-{/snippet}
 {#snippet DataTableActions({ id, isAdmin, IsSomePageRowsSelected, IsAllPageRowsSelected })}
 	{#if !IsSomePageRowsSelected && !IsAllPageRowsSelected}
-		<LongDataTableView {id} {isAdmin} />
-		<LongDataTableEdit {form} {id} {isAdmin} />
+		<DomainDataTableView {id} {isAdmin} />
+		<DomainDataTableEdit {form} {id} {isAdmin} />
 		{#if isAdmin}
 			<Dialog.Root>
 				<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>PD</Dialog.Trigger>
@@ -474,40 +414,9 @@
 			</Dialog.Root>
 		{/if}
 	{/if}
-	<!-- <DropdownMenu.Root>
-		<DropdownMenu.Trigger class="flex size-8 text-muted-foreground data-[state=open]:bg-muted">
-			{#snippet child({ props })}
-				<Button variant="ghost" size="icon" {...props}>
-					<DotsVerticalIcon />
-					<span class="sr-only">Open menu</span>
-				</Button>
-			{/snippet}
-		</DropdownMenu.Trigger>
-		{#if !IsSomePageRowsSelected && !IsAllPageRowsSelected}
-			<DropdownMenu.Content align="end" class="w-36">
-				<DropdownMenu.Item><button onclick={view(id)}>View</button></DropdownMenu.Item>
-				<DropdownMenu.Item><LongDataTableEdit {form} {refreshLongDataTable} {id}/></DropdownMenu.Item>
-				<DropdownMenu.Item><button onclick={clone(id)}>Clone</button></DropdownMenu.Item>
-				<DropdownMenu.Item><button onclick={pin(id)}>Pin</button></DropdownMenu.Item>
-				<DropdownMenu.Item
-					><button onclick={viewhistory(id)}>View History</button></DropdownMenu.Item
-				>
-				<DropdownMenu.Item variant="destructive"
-					><button onclick={softdelete(id)}>Delete</button></DropdownMenu.Item
-				>
-				{#if isAdmin}
-					<DropdownMenu.Separator />
-					<DropdownMenu.Item><button onclick={archive(id)}>Archive</button></DropdownMenu.Item>
-					<DropdownMenu.Item variant="destructive"
-						><button onclick={permanentdelete(id)}>Permanent Delete</button></DropdownMenu.Item
-					>
-				{/if}
-			</DropdownMenu.Content>
-		{/if}
-	</DropdownMenu.Root> -->
 {/snippet}
 
-{#snippet DraggableRow({ row, index }: { row: Row<LongSchema>; index: number })}
+{#snippet DraggableRow({ row, index }: { row: Row<DomainSchema>; index: number })}
 	{@const { ref, isDragging, handleRef } = useSortable({
 		id: row.original.id,
 		index: () => index
@@ -531,7 +440,7 @@
 	</Table.Row>
 {/snippet}
 
-{#snippet DataTableText({ text }: { row: Row<LongSchema> })}
+{#snippet DataTableText({ text }: { row: Row<DomainSchema> })}
 	<div class="truncate-text">
 		<Tooltip.Provider>
 			<Tooltip.Root>
@@ -544,7 +453,7 @@
 	</div>
 {/snippet}
 
-{#snippet DataTableHeader({ text, onclick, filterOn }: { row: Row<LongSchema> })}
+{#snippet DataTableHeader({ text, onclick, filterOn }: { row: Row<DomainSchema> })}
 	<div>
 		<Button {onclick} variant="ghost" class="cursor-pointer">
 			{text}

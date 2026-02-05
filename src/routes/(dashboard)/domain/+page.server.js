@@ -1,5 +1,5 @@
 import { deserialize } from '$app/forms';
-import { Video } from '$lib/server/models/video.model';
+import { Domain } from '$lib/server/models/domain.model';
 import { VideoVersionHistory } from '$lib/server/models/videoVersionHistory.model.js';
 import { formBody } from '$lib/server/utils.js';
 import { error, fail, json } from '@sveltejs/kit';
@@ -7,20 +7,20 @@ import { error, fail, json } from '@sveltejs/kit';
 export const load = async ({ locals }) => {
 	console.log('locals useremail ' + locals.useremail);
 	// let columns = '_id title description status domain userCreatedBy createdAt';
-	// let shortVideos = await Video.find({ softDelete: false, type: 'short', archived: false }, columns);
+	// let Domains = await Domain.find({ softDelete: false, type: 'long', archived: false }, columns);
 
-	// console.log('load ' + shortVideos);
+	// console.log('load ' + Domains);
 	// let todos = deserialize(videos);
 	return {
 		isAdmin: locals.isAdmin,
 		username: locals.username,
 		useremail: locals.useremail
-		// shortVideos: JSON.parse(JSON.stringify(shortVideos))
+		// Domains: JSON.parse(JSON.stringify(Domains))
 	};
 };
 
 export const actions = {
-	addNewShortVideo: async ({ request, locals }) => {
+	addNewDomain: async ({ request, locals }) => {
 		let formdata = await request.formData();
 		// console.log('formdata');
 		// console.log(formdata);
@@ -35,7 +35,7 @@ export const actions = {
 			// return { error: true, message: 'Title must be present' };
 		}
 		// const description = data.description;
-		// console.log('addNewShortVideo title ' + title + ' addNewShortVideo description ' + description);
+		// console.log('addNewDomain title ' + title + ' addNewDomain description ' + description);
 		try {
 			data.userCreatedBy = locals.useremail;
 			data.userUpdatedBy = locals.useremail;
@@ -51,25 +51,16 @@ export const actions = {
 				data.softDelete = false;
 			}
 
-			const video = await Video.create(data);
-			console.log(video);
-			// const temp = video;
-			// delete temp._id;
-			// temp['parentVideoId'] = video._id;
-			// // temp['channelId'] = video.channelId;
-			// VideoVersionHistory.create(temp);
-			let newVideo = { ...video._doc };
-			newVideo['parentVideoId'] = newVideo._id;
-			delete newVideo._id;
-			VideoVersionHistory.create(newVideo);
-			return { success: true, message: `You created ${video.title} short video` };
+			const domain = await Domain.create(data);
+			console.log(domain);
+			return { success: true, message: `You created ${domain.title} domain` };
 		} catch (err) {
 			return fail(500, { returndata: data, error: true, message: err.message });
 			// return { error: true, message: err.message };
 			// return error(400, { message: err.message });
 		}
 	},
-	editShortVideo: async ({ request, locals }) => {
+	editDomain: async ({ request, locals }) => {
 		let formdata = await request.formData();
 		// console.log('formdata');
 		// console.log(formdata);
@@ -97,22 +88,18 @@ export const actions = {
 				data.softDelete = false;
 			}
 
-			let video = await Video.findByIdAndUpdate(data._id, data, {
+			let domain = await Domain.findByIdAndUpdate(data._id, data, {
 				new: true
 			});
-			if (!video) {
-				return fail(400, { returndata: data, error: true, message: 'Video not found.' });
+			if (!domain) {
+				return fail(400, { returndata: data, error: true, message: 'Domain not found.' });
 			}
-			let newVideo = { ...video._doc };
-			newVideo['parentVideoId'] = newVideo._id;
-			delete newVideo._id;
-			VideoVersionHistory.create(newVideo);
-			return { success: true, message: `You updated ${video.title} short video` };
+			return { success: true, message: `You updated ${domain.title} domain` };
 		} catch (err) {
 			return fail(500, { returndata: data, error: true, message: err.message });
 		}
 	},
-	permanentDeleteShortVideo: async ({ request, locals }) => {
+	permanentDeleteDomain: async ({ request, locals }) => {
 		if (!locals.isAdmin) {
 			fail(400, { error: true, message: 'Unauthorized!' });
 		}
@@ -130,15 +117,15 @@ export const actions = {
 		}
 		try {
 			const idsArray = data._id.split(',');
-			// const video = await Video.findByIdAndDelete(id);
-			const result = await Video.deleteMany({
+			// const domain = await Domain.findByIdAndDelete(id);
+			const result = await Domain.deleteMany({
 				_id: { $in: idsArray }
 			});
 
 			return {
 				success: true,
 				message:
-					result.deletedCount + `Video${result.deletedCount > 1 ? 's' : ''} deleted permanently`
+					result.deletedCount + `Domain${result.deletedCount > 1 ? 's' : ''} deleted permanently`
 			};
 		} catch (error) {
 			return fail(500, { error: true, message: error.message });
