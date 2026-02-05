@@ -172,8 +172,8 @@
 								placeholder="Add audio prompt here"
 								id="audioPrompt"
 								name="audioPrompt"
-								class="min-h-30"
-								value={returndata?.audio ?? ''}
+								class="min-h-160"
+								value={returndata?.audioPrompt ?? ''}
 							/>
 						</div>
 					</Tabs.Content>

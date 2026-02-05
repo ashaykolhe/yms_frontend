@@ -160,16 +160,16 @@
 					<input type="hidden" name="_id" bind:value={id} />
 				</Tabs.Content>
 				<Tabs.Content value="audio">
-					<div class="grid gap-3">
-						<Textarea
-							placeholder="Add audio prompt here"
-							id="audioPrompt"
-							name="audioPrompt"
-							class="min-h-30"
-							value={returndata?.audio ?? ''}
-						/>
-					</div>
-				</Tabs.Content>
+						<div class="grid gap-3">
+							<Textarea
+								placeholder="Add audio prompt here"
+								id="audioPrompt"
+								name="audioPrompt"
+								class="min-h-160"
+								value={returndata?.audioPrompt ?? ''}
+							/>
+						</div>
+					</Tabs.Content>
 				<Tabs.Content value="backgroundVisuals">
 					<div class="grid gap-3">
 						<Textarea
