@@ -9,17 +9,19 @@ export const GET: RequestHandler = async ({ url }) => {
 	const type = url.searchParams.get('type');
 	if (type === 'A') {
 		const channelId = url.searchParams.get('channelId');
+		console.log('channelId channelId ' + channelId);
 		let columns = '_id title description userCreatedBy createdAt';
-		let domain = await Status.find(
+		let status = await Status.find(
 			{ softDelete: false, archived: false, channelId: channelId },
 			columns
 		).sort({ createdAt: -1 });
-		return json(domain);
+		console.log('status status ' + status);
+		return json(status);
 	} else if (type === 'E') {
 		const id = url.searchParams.get('id');
-		let domain = await Status.findById(id);
-		console.log('domain ' + domain);
-		return json(domain);
+		let status = await Status.findById(id);
+		console.log('status ' + status);
+		return json(status);
 	}
 	return json({});
 };

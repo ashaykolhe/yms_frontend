@@ -15,6 +15,7 @@
 	import { getContext } from 'svelte';
 	import Checkbox from './ui/checkbox/checkbox.svelte';
 	let bindtitle = $state('titledescriptionkeywords');
+	let channelId = $state(getContext('channelId'));
 	console.log('getContext(channelId) ' + getContext('channelId'));
 	let isOpen = $state(false);
 	let { id, isAdmin } = $props();

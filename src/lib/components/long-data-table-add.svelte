@@ -45,8 +45,8 @@
 		console.log('isOpen ' + isOpen);
 	}
 
-	let domains=$state('');
-	let statuses=$state('');
+	let domains = $state('');
+	let statuses = $state('');
 	// <!-- TODO - DOMAIN should come from MONGO  -->
 	async function fetchDomainStatus() {
 		if (channelId) {
@@ -73,7 +73,7 @@
 			console.log('domain fetchData ' + domains);
 		}
 
-		return [];
+		// return [];
 	}
 	$effect(() => {
 		fetchDomainStatus();
