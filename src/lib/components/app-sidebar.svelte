@@ -64,6 +64,11 @@
 				url: '/channel',
 				title: 'Channel',
 				icon: DashboardIcon
+			},
+			{
+				url: '/prompt',
+				title: 'Prompt',
+				icon: DashboardIcon
 			}
 		],
 		navMain: [

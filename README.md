@@ -99,3 +99,6 @@ status and domain should come from DB in datatable add edit view
 color coded status - store color info in db
 
 *permanent delete -> ask for confirmation
+
+
+Prompts tab
