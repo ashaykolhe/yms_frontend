@@ -34,6 +34,10 @@ export const actions = {
 			return fail(400, { returndata: data, error: true, message: 'Title must be present' });
 			// return { error: true, message: 'Title must be present' };
 		}
+		if (!data.idea) {
+			return fail(400, { returndata: data, error: true, message: 'Idea must be present' });
+			// return { error: true, message: 'Title must be present' };
+		}
 		// const description = data.description;
 		// console.log('addNewIdea title ' + title + ' addNewIdea description ' + description);
 		try {

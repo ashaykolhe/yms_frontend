@@ -34,6 +34,10 @@ export const actions = {
 			return fail(400, { returndata: data, error: true, message: 'Title must be present' });
 			// return { error: true, message: 'Title must be present' };
 		}
+		if (!data.prompt) {
+			return fail(400, { returndata: data, error: true, message: 'Prompt must be present' });
+			// return { error: true, message: 'Title must be present' };
+		}
 		// const description = data.description;
 		// console.log('addNewPrompt title ' + title + ' addNewPrompt description ' + description);
 		try {

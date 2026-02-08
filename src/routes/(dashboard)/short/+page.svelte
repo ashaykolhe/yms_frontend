@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { blur, crossfade, draw, fade, fly, scale, slide } from 'svelte/transition';
 	let { data, form } = $props();
 	let isAdmin = data.isAdmin;
 	// let items = data.shortVideos;
@@ -72,7 +73,7 @@
 
 <SiteHeader page="Short" callback={setChannelId} />
 {#if form?.success && message?.length > 0}
-	<div class="grid w-full max-w-xl items-start gap-4">
+	<div class="grid w-full max-w-xl items-start gap-4" transition:slide>
 		<Alert.Root variant="destructive">
 			<!-- <CheckCircle2Icon /> -->
 			<Alert.Title>{message}</Alert.Title>
